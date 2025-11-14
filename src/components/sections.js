@@ -179,6 +179,7 @@ export function renderContact(contactData) {
               id="contact-name"
               name="name" 
               required 
+              maxlength="100"
               aria-required="true"
               aria-describedby="name-error"
             />
@@ -191,6 +192,7 @@ export function renderContact(contactData) {
               id="contact-email"
               name="email" 
               required 
+              maxlength="254"
               aria-required="true"
               aria-describedby="email-error"
             />
@@ -204,6 +206,8 @@ export function renderContact(contactData) {
               name="phone" 
               placeholder="(555) 123-4567"
               required 
+              maxlength="20"
+              pattern="[\d\s\(\)\-\+\.]{10,}"
               aria-required="true"
               aria-describedby="phone-error"
             />
@@ -229,6 +233,8 @@ export function renderContact(contactData) {
               id="contact-message"
               name="message" 
               required 
+              maxlength="5000"
+              minlength="10"
               aria-required="true"
               aria-describedby="message-error"
             ></textarea>

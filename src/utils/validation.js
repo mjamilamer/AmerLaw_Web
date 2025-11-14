@@ -1,25 +1,24 @@
 /**
  * Form validation utilities
+ * Enhanced with security measures
  */
+import {
+  validateName,
+  validateEmail,
+  validatePhone,
+  validateMessage,
+  validateFile,
+  validatePracticeArea,
+  sanitizeFormData
+} from './security.js';
 
 /**
- * Validate email format
- * @param {string} email - Email to validate
- * @returns {boolean}
- */
-export function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
- * Validate form field
+ * Validate form field with enhanced security
  * @param {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} field - Field to validate
+ * @param {Array} allowedPracticeAreas - Optional array of allowed practice areas
  * @returns {boolean}
  */
-export function validateField(field) {
-  // Handle different field types
-  const value = field.type === 'file' ? field.files : field.value.trim();
+export function validateField(field, allowedPracticeAreas = []) {
   const fieldName = field.name;
   const errorElement = document.getElementById(`${fieldName}-error`);
   
@@ -29,89 +28,130 @@ export function validateField(field) {
   errorElement.textContent = '';
   field.classList.remove('error');
 
-  // Required field check (skip for file inputs, handled separately)
-  if (field.hasAttribute('required') && field.type !== 'file') {
-    const fieldValue = typeof value === 'string' ? value : field.value.trim();
-    if (!fieldValue) {
-      errorElement.textContent = 'This field is required';
-      field.classList.add('error');
-      return false;
+  // Handle file inputs separately
+  if (field.type === 'file') {
+    if (field.files && field.files.length > 0) {
+      for (let i = 0; i < field.files.length; i++) {
+        const file = field.files[i];
+        const validation = validateFile(file);
+        if (!validation.isValid) {
+          errorElement.textContent = validation.error;
+          field.classList.add('error');
+          return false;
+        }
+      }
     }
+    return true;
   }
 
-  // Email validation
-  if (field.type === 'email' && typeof value === 'string' && value && !isValidEmail(value)) {
-    errorElement.textContent = 'Please enter a valid email address';
+  // Get field value
+  const value = field.value;
+  if (!value && field.hasAttribute('required')) {
+    errorElement.textContent = 'This field is required';
     field.classList.add('error');
     return false;
   }
 
-  // Phone validation
-  if (field.type === 'tel' && typeof value === 'string' && value) {
-    const phoneRegex = /^[\d\s\(\)\-\+\.]{10,}$/;
-    const digitsOnly = value.replace(/\D/g, '');
-    if (digitsOnly.length < 10) {
-      errorElement.textContent = 'Please enter a valid phone number (at least 10 digits)';
-      field.classList.add('error');
-      return false;
-    }
-  }
+  if (!value) return true; // Optional field, no validation needed
 
-  // Select/dropdown validation
-  if (field.tagName === 'SELECT' && field.hasAttribute('required')) {
-    const selectValue = field.value.trim();
-    if (!selectValue) {
-      errorElement.textContent = 'Please select an option';
-      field.classList.add('error');
-      return false;
-    }
-  }
+  // Validate based on field name and type
+  let validation;
 
-  // Message length check
-  if (fieldName === 'message' && typeof value === 'string' && value.length < 10) {
-    errorElement.textContent = 'Message must be at least 10 characters';
-    field.classList.add('error');
-    return false;
-  }
-
-  // File validation
-  if (field.type === 'file' && field.files && field.files.length > 0) {
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/jpg', 'image/png', 'text/plain'];
-    
-    for (let i = 0; i < field.files.length; i++) {
-      const file = field.files[i];
-      if (file.size > maxSize) {
-        errorElement.textContent = `File "${file.name}" exceeds 10MB limit`;
+  switch (fieldName) {
+    case 'name':
+      validation = validateName(value);
+      if (!validation.isValid) {
+        errorElement.textContent = validation.error;
         field.classList.add('error');
         return false;
       }
-      if (!allowedTypes.includes(file.type)) {
-        errorElement.textContent = `File "${file.name}" is not an accepted format`;
+      // Update field with sanitized value
+      if (field.value !== validation.sanitized) {
+        field.value = validation.sanitized;
+      }
+      return true;
+
+    case 'email':
+      validation = validateEmail(value);
+      if (!validation.isValid) {
+        errorElement.textContent = validation.error;
         field.classList.add('error');
         return false;
       }
-    }
-  }
+      // Update field with sanitized value
+      if (field.value !== validation.sanitized) {
+        field.value = validation.sanitized;
+      }
+      return true;
 
-  return true;
+    case 'phone':
+      validation = validatePhone(value);
+      if (!validation.isValid) {
+        errorElement.textContent = validation.error;
+        field.classList.add('error');
+        return false;
+      }
+      // Update field with formatted value
+      if (field.value !== validation.sanitized) {
+        field.value = validation.sanitized;
+      }
+      return true;
+
+    case 'message':
+      validation = validateMessage(value);
+      if (!validation.isValid) {
+        errorElement.textContent = validation.error;
+        field.classList.add('error');
+        return false;
+      }
+      return true;
+
+    case 'practice-area':
+      validation = validatePracticeArea(value, allowedPracticeAreas);
+      if (!validation.isValid) {
+        errorElement.textContent = validation.error;
+        field.classList.add('error');
+        return false;
+      }
+      return true;
+
+    default:
+      // Generic validation for other fields
+      if (field.hasAttribute('required') && !value.trim()) {
+        errorElement.textContent = 'This field is required';
+        field.classList.add('error');
+        return false;
+      }
+      return true;
+  }
 }
 
 /**
  * Initialize form validation
  * @param {HTMLFormElement} form - Form element
+ * @param {Array} allowedPracticeAreas - Optional array of allowed practice areas
  */
-export function initFormValidation(form) {
+export function initFormValidation(form, allowedPracticeAreas = []) {
   if (!form) return;
+
+  // Get practice areas from select options if not provided
+  if (allowedPracticeAreas.length === 0) {
+    const practiceAreaSelect = form.querySelector('select[name="practice-area"]');
+    if (practiceAreaSelect) {
+      allowedPracticeAreas = Array.from(practiceAreaSelect.options)
+        .map(option => option.value)
+        .filter(value => value !== '');
+    }
+  }
 
   const fields = form.querySelectorAll('input[required], textarea[required], select[required]');
 
   // Real-time validation on blur
   fields.forEach(field => {
-    field.addEventListener('blur', () => validateField(field));
+    field.addEventListener('blur', () => validateField(field, allowedPracticeAreas));
     field.addEventListener('input', () => {
       if (field.classList.contains('error')) {
-        validateField(field);
+        validateField(field, allowedPracticeAreas);
       }
     });
   });
@@ -123,7 +163,7 @@ export function initFormValidation(form) {
     let isValid = true;
 
     fields.forEach(field => {
-      if (!validateField(field)) {
+      if (!validateField(field, allowedPracticeAreas)) {
         isValid = false;
       }
     });
@@ -157,13 +197,14 @@ export function initFormValidation(form) {
     }
 
     try {
-      // Prepare FormData
+      // Prepare and sanitize FormData
       const formData = new FormData(form);
+      const sanitizedFormData = sanitizeFormData(formData);
       
       // Submit via AJAX to FormSubmit
       const response = await fetch(formAction, {
         method: 'POST',
-        body: formData
+        body: sanitizedFormData
       });
 
       if (response.ok) {
