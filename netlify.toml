@@ -31,3 +31,8 @@
   X-Frame-Options = "SAMEORIGIN"
   Referrer-Policy = "strict-origin-when-cross-origin"
   Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Netlify Forms configuration
+# Email notifications need to be configured in Netlify Dashboard:
+# Site settings > Forms > Form notifications > Add notification
+# Set recipient email to: WAELAMER@AMERLAWLLC.COM or mjamilamer@gmail.com

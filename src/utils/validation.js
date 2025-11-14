@@ -178,10 +178,11 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
       return;
     }
 
-    // Get form action and prepare FormData
-    const formAction = form.getAttribute('action');
-    if (!formAction || !formAction.includes('formsubmit.co')) {
-      // Fallback to regular submission if not FormSubmit
+    // Check if this is a Netlify form
+    const isNetlifyForm = form.hasAttribute('data-netlify') || form.getAttribute('data-netlify') === 'true';
+    
+    if (!isNetlifyForm) {
+      // If not a Netlify form, submit normally
       form.submit();
       return;
     }
@@ -215,7 +216,9 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
         }
       }
       
-      // Submit via AJAX to FormSubmit with timeout
+      // Submit via AJAX to Netlify Forms
+      // Netlify Forms endpoint is the current page URL
+      const formAction = form.action || window.location.pathname;
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
       
@@ -224,25 +227,23 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
         response = await fetch(formAction, {
           method: 'POST',
           body: sanitizedFormData,
-          redirect: 'follow',
           signal: controller.signal
         });
         clearTimeout(timeoutId);
       } catch (fetchError) {
         clearTimeout(timeoutId);
-        // If fetch fails (CORS, network, etc.), fall back to regular form submission
+        // If fetch fails, fall back to regular form submission
         if (fetchError.name === 'AbortError') {
           throw new Error('Request timed out');
         }
-        // For CORS or network errors, use regular form submission
+        // For network errors, use regular form submission
         console.warn('AJAX submission failed, using regular form submission:', fetchError);
         form.submit();
         return; // Let the form submit normally
       }
 
-      // FormSubmit typically returns 200 with HTML or redirects
-      // If we get here without error, assume success
-      if (response.status === 200 || response.status === 0 || response.ok || response.type === 'opaqueredirect') {
+      // Netlify Forms returns 200 on success
+      if (response.ok || response.status === 200) {
         // Show success message
         const successMessage = document.getElementById('form-success-message');
         if (successMessage) {

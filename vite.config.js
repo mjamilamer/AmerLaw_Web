@@ -17,6 +17,7 @@ export default defineConfig({
         'terms-of-service': resolve(__dirname, 'src/terms-of-service/index.html'),
         'accessibility-statement': resolve(__dirname, 'src/accessibility-statement/index.html'),
         'disclaimer': resolve(__dirname, 'src/disclaimer/index.html'),
+        'success': resolve(__dirname, 'src/success.html'),
       }
     }
   },

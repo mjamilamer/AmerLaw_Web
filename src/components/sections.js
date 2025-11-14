@@ -164,10 +164,7 @@ export function renderContact(contactData) {
     <div class="container contact-split reveal">
       <div>
         <h2>Contact Us</h2>
-        <form name="contact" action="https://formsubmit.co/mjamilamer@gmail.com" method="POST" enctype="multipart/form-data" novalidate aria-label="Contact form" id="contact-form">
-          <input type="hidden" name="_subject" value="New Contact Form Submission from Amer Law Website" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="box" />
+        <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" novalidate aria-label="Contact form" id="contact-form">
           <input type="hidden" name="form-name" value="contact" />
           <div id="form-success-message" class="form-success-message" role="alert" aria-live="polite" style="display: none;">
             <p>✅ Thank you! Your message has been sent successfully. We'll get back to you soon.</p>
