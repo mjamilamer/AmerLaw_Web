@@ -197,21 +197,44 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
     }
 
     try {
-      // Prepare and sanitize FormData
+      // Prepare FormData - sanitize text fields but preserve files
       const formData = new FormData(form);
-      const sanitizedFormData = sanitizeFormData(formData);
+      
+      // Create new FormData with sanitized text values
+      const sanitizedFormData = new FormData();
+      for (const [key, value] of formData.entries()) {
+        // Preserve files and hidden fields as-is
+        if (value instanceof File || key.startsWith('_')) {
+          sanitizedFormData.append(key, value);
+        } else if (typeof value === 'string') {
+          // Sanitize string values
+          const sanitized = value.trim();
+          sanitizedFormData.append(key, sanitized);
+        } else {
+          sanitizedFormData.append(key, value);
+        }
+      }
       
       // Submit via AJAX to FormSubmit
+      // FormSubmit accepts standard form submissions and returns HTML/redirect
       const response = await fetch(formAction, {
         method: 'POST',
-        body: sanitizedFormData
+        body: sanitizedFormData,
+        redirect: 'follow'
       });
 
-      if (response.ok) {
+      // FormSubmit typically returns 200 with HTML or redirects
+      // If we get here without error, assume success
+      if (response.status === 200 || response.status === 0 || response.ok) {
         // Show success message
         const successMessage = document.getElementById('form-success-message');
         if (successMessage) {
           successMessage.style.display = 'block';
+          successMessage.innerHTML = '<p>✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.</p>';
+          // Reset error styling if it was set
+          successMessage.style.background = '';
+          successMessage.style.borderColor = '';
+          successMessage.style.color = '';
           // Scroll to success message
           successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -232,19 +255,29 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
           submitButton.textContent = originalText;
         }
       } else {
-        throw new Error('Form submission failed');
+        throw new Error(`Form submission failed with status: ${response.status}`);
       }
+      
     } catch (error) {
       console.error('Form submission error:', error);
+      
+      // Check error type
+      let errorMessage = 'There was an error sending your message. Please try again or contact us directly.';
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMessage = 'Network error. Please check your connection and try again.';
+      } else if (error.message.includes('Failed to fetch')) {
+        errorMessage = 'Unable to connect to the server. Please check your connection and try again.';
+      }
       
       // Show error message
       const successMessage = document.getElementById('form-success-message');
       if (successMessage) {
-        successMessage.innerHTML = '<p>❌ There was an error sending your message. Please try again or contact us directly.</p>';
+        successMessage.innerHTML = `<p>❌ ${errorMessage}</p>`;
         successMessage.style.display = 'block';
         successMessage.style.background = '#f8d7da';
         successMessage.style.borderColor = '#f5c6cb';
         successMessage.style.color = '#721c24';
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       
       // Reset button

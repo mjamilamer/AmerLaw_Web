@@ -207,7 +207,7 @@ export function renderContact(contactData) {
               placeholder="(555) 123-4567"
               required 
               maxlength="20"
-              pattern="[\d\s\(\)\-\+\.]{10,}"
+              pattern="[0-9\s\(\)\-\+\.]{10,}"
               aria-required="true"
               aria-describedby="phone-error"
             />
