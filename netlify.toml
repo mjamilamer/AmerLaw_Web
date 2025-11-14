@@ -1,0 +1,32 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy/"
+  status = 301
+
+[[redirects]]
+  from = "/terms-of-service"
+  to = "/terms-of-service/"
+  status = 301
+
+[[redirects]]
+  from = "/accessibility-statement"
+  to = "/accessibility-statement/"
+  status = 301
+
+[[redirects]]
+  from = "/disclaimer"
+  to = "/disclaimer/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "SAMEORIGIN"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Permissions-Policy = "geolocation=(), microphone=(), camera=()"
