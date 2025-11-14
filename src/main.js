@@ -49,6 +49,29 @@ function init() {
     // Initialize form validation
     const contactForm = $('form[name="contact"]');
     if (contactForm) {
+      // Set success redirect URL to current page with success parameter
+      const successUrlInput = $('#form-success-url');
+      if (successUrlInput) {
+        const currentUrl = window.location.origin + window.location.pathname;
+        successUrlInput.value = `${currentUrl}?success=true#contact`;
+      }
+      
+      // Check if form was submitted successfully
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('success') === 'true') {
+        const successMessage = $('#form-success-message');
+        if (successMessage) {
+          successMessage.style.display = 'block';
+          // Scroll to form
+          const contactSection = $('#contact');
+          if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          // Clear URL parameter
+          window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+        }
+      }
+      
       initFormValidation(contactForm);
       initFileUpload(contactForm);
     }
