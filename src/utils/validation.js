@@ -116,8 +116,10 @@ export function initFormValidation(form) {
     });
   });
 
-  // Form submission validation
+  // Form submission validation and AJAX submission
   form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Always prevent default to handle with AJAX
+    
     let isValid = true;
 
     fields.forEach(field => {
@@ -127,7 +129,6 @@ export function initFormValidation(form) {
     });
 
     if (!isValid) {
-      e.preventDefault();
       // Focus first invalid field
       const firstError = form.querySelector('.error');
       if (firstError) {
@@ -137,20 +138,80 @@ export function initFormValidation(form) {
       return;
     }
 
+    // Get form action and prepare FormData
+    const formAction = form.getAttribute('action');
+    if (!formAction || !formAction.includes('formsubmit.co')) {
+      // Fallback to regular submission if not FormSubmit
+      form.submit();
+      return;
+    }
+
     // Add loading state
     const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton ? submitButton.textContent : 'Send Message';
+    
     if (submitButton) {
-      const originalText = submitButton.textContent;
       submitButton.disabled = true;
       submitButton.classList.add('loading');
       submitButton.textContent = 'Sending...';
+    }
+
+    try {
+      // Prepare FormData
+      const formData = new FormData(form);
       
-      // Reset after 3 seconds (in case form doesn't redirect)
-      setTimeout(() => {
+      // Submit via AJAX to FormSubmit
+      const response = await fetch(formAction, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        // Show success message
+        const successMessage = document.getElementById('form-success-message');
+        if (successMessage) {
+          successMessage.style.display = 'block';
+          // Scroll to success message
+          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Reset form
+        form.reset();
+        
+        // Clear file list if exists
+        const fileList = document.getElementById('file-list');
+        if (fileList) {
+          fileList.innerHTML = '';
+        }
+        
+        // Reset button
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.classList.remove('loading');
+          submitButton.textContent = originalText;
+        }
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      
+      // Show error message
+      const successMessage = document.getElementById('form-success-message');
+      if (successMessage) {
+        successMessage.innerHTML = '<p>❌ There was an error sending your message. Please try again or contact us directly.</p>';
+        successMessage.style.display = 'block';
+        successMessage.style.background = '#f8d7da';
+        successMessage.style.borderColor = '#f5c6cb';
+        successMessage.style.color = '#721c24';
+      }
+      
+      // Reset button
+      if (submitButton) {
         submitButton.disabled = false;
         submitButton.classList.remove('loading');
         submitButton.textContent = originalText;
-      }, 3000);
+      }
     }
   });
 }
