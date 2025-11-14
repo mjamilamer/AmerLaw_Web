@@ -44,7 +44,17 @@ export const FIRM = {
   tagline: "Trusted Legal Representation for Your Future",
   
   // Copyright Year
-  copyrightYear: "2025"
+  copyrightYear: "2025",
+  
+  // Email Configuration
+  email: {
+    // Custom subject line for contact form submissions
+    // You can use form field placeholders: {{name}}, {{email}}, {{practice-area}}
+    // Example: "New Contact: {{name}} - {{practice-area}}"
+    contactFormSubject: "New Contact Form Submission from {{name}} - {{practice-area}}",
+    // Alternative simple subject (if you don't want placeholders)
+    contactFormSubjectSimple: "New Contact Form Submission from Amer Law Website"
+  }
 };
 
 /**

@@ -36,3 +36,18 @@
 # Email notifications need to be configured in Netlify Dashboard:
 # Site settings > Forms > Form notifications > Add notification
 # Set recipient email to: WAELAMER@AMERLAWLLC.COM or mjamilamer@gmail.com
+#
+# Custom Email Subject Line:
+# In the notification settings, you can use form field placeholders in the subject:
+# - {{name}} - Submitter's name
+# - {{email}} - Submitter's email
+# - {{practice-area}} - Selected practice area
+# - {{phone}} - Phone number
+#
+# Example subject templates:
+# - "New Contact: {{name}} - {{practice-area}}"
+# - "Contact Form: {{name}} ({{email}})"
+# - "{{practice-area}} Inquiry from {{name}}"
+#
+# Or use the simple subject: "New Contact Form Submission from Amer Law Website"
+# (Configured in src/utils/constants.js - FIRM.email.contactFormSubject)

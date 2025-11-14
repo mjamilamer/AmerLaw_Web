@@ -6,6 +6,26 @@ import { FIRM } from '../utils/constants.js';
 import { siteContent } from '../utils/content.js';
 
 /**
+ * Generate email subject line with form data placeholders
+ * @param {object} formData - Form data object
+ * @returns {string} Subject line with placeholders replaced
+ */
+function generateEmailSubject(formData = {}) {
+  let subject = FIRM.email.contactFormSubjectSimple;
+  
+  // If using placeholders, replace them with actual values
+  if (FIRM.email.contactFormSubject.includes('{{')) {
+    subject = FIRM.email.contactFormSubject
+      .replace(/\{\{name\}\}/g, formData.name || 'Visitor')
+      .replace(/\{\{email\}\}/g, formData.email || '')
+      .replace(/\{\{practice-area\}\}/g, formData['practice-area'] || 'General Inquiry')
+      .replace(/\{\{phone\}\}/g, formData.phone || '');
+  }
+  
+  return subject;
+}
+
+/**
  * Render hero section
  */
 export function renderHero(heroData) {
