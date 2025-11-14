@@ -164,8 +164,11 @@ export function renderContact(contactData) {
     <div class="container contact-split reveal">
       <div>
         <h2>Contact Us</h2>
-        <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" novalidate aria-label="Contact form" id="contact-form">
+        <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field" novalidate aria-label="Contact form" id="contact-form">
           <input type="hidden" name="form-name" value="contact" />
+          <p style="display: none;">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          </p>
           <div id="form-success-message" class="form-success-message" role="alert" aria-live="polite" style="display: none;">
             <p>✅ Thank you! Your message has been sent successfully. We'll get back to you soon.</p>
           </div>

@@ -201,11 +201,15 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
       // Prepare FormData - sanitize text fields but preserve files
       const formData = new FormData(form);
       
-      // Create new FormData with sanitized text values
+      // Check if form has file uploads
+      const fileInput = form.querySelector('input[type="file"]');
+      const hasFiles = fileInput && fileInput.files && fileInput.files.length > 0;
+      
+      // Create sanitized FormData
       const sanitizedFormData = new FormData();
       for (const [key, value] of formData.entries()) {
         // Preserve files and hidden fields as-is
-        if (value instanceof File || key.startsWith('_')) {
+        if (value instanceof File || key.startsWith('_') || key === 'bot-field') {
           sanitizedFormData.append(key, value);
         } else if (typeof value === 'string') {
           // Sanitize string values
@@ -217,18 +221,27 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
       }
       
       // Submit via AJAX to Netlify Forms
-      // Netlify Forms endpoint is the current page URL
-      const formAction = form.action || window.location.pathname;
+      // Netlify Forms endpoint is the root path "/"
+      const formAction = form.action || '/';
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
       
+      // Prepare fetch options according to Netlify docs
+      const fetchOptions = {
+        method: 'POST',
+        body: hasFiles ? sanitizedFormData : new URLSearchParams(sanitizedFormData).toString(),
+        signal: controller.signal
+      };
+      
+      // For text-only forms, add Content-Type header
+      // For file uploads, don't include Content-Type (browser sets it automatically)
+      if (!hasFiles) {
+        fetchOptions.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+      }
+      
       let response;
       try {
-        response = await fetch(formAction, {
-          method: 'POST',
-          body: sanitizedFormData,
-          signal: controller.signal
-        });
+        response = await fetch(formAction, fetchOptions);
         clearTimeout(timeoutId);
       } catch (fetchError) {
         clearTimeout(timeoutId);
