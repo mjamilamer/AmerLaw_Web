@@ -215,17 +215,34 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
         }
       }
       
-      // Submit via AJAX to FormSubmit
-      // FormSubmit accepts standard form submissions and returns HTML/redirect
-      const response = await fetch(formAction, {
-        method: 'POST',
-        body: sanitizedFormData,
-        redirect: 'follow'
-      });
+      // Submit via AJAX to FormSubmit with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+      
+      let response;
+      try {
+        response = await fetch(formAction, {
+          method: 'POST',
+          body: sanitizedFormData,
+          redirect: 'follow',
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        // If fetch fails (CORS, network, etc.), fall back to regular form submission
+        if (fetchError.name === 'AbortError') {
+          throw new Error('Request timed out');
+        }
+        // For CORS or network errors, use regular form submission
+        console.warn('AJAX submission failed, using regular form submission:', fetchError);
+        form.submit();
+        return; // Let the form submit normally
+      }
 
       // FormSubmit typically returns 200 with HTML or redirects
       // If we get here without error, assume success
-      if (response.status === 200 || response.status === 0 || response.ok) {
+      if (response.status === 200 || response.status === 0 || response.ok || response.type === 'opaqueredirect') {
         // Show success message
         const successMessage = document.getElementById('form-success-message');
         if (successMessage) {
