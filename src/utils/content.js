@@ -92,12 +92,8 @@ export const siteContent = {
     ],
     faq: [
       {
-        question: "Do you offer free consultations?",
-        answer: "Yes, I offer a free 30-minute initial consultation to discuss your legal needs and determine how I can help you. This gives us both a chance to see if we're a good fit."
-      },
-      {
         question: "What areas of law do you specialize in?",
-        answer: "I specialize in Family Law, Business Law, and Real Estate. With over 15 years of experience, I focus on these areas to provide the best possible representation for my clients."
+        answer: "I specialize in Personal Injury, Medical Insurance Disputes, Real Estate, and Commercial Law. With extensive experience in these areas, I focus on providing the best possible representation for my clients."
       },
       {
         question: "How much do your services cost?",
