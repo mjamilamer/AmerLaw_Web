@@ -22,23 +22,24 @@ export const siteContent = {
     ],
     about: {
       heading: "About Our Practice",
-      text: `${FIRM.name} is a solo practice law firm dedicated to providing personalized, client-focused legal representation. Founded with the belief that every client deserves direct access to their attorney, our practice offers a different approach to legal services. Our practice specializes in family law, business law, and real estate matters, bringing over 15 years of combined experience to serve clients throughout New Jersey. We pride ourselves on clear communication, practical solutions, and results that matter to you.`
+      text: `${FIRM.name} is a solo practice founded by attorney Wael Amer, offering dedicated and client-focused legal representation throughout ${FIRM.location.state}. After several years at a major law firm, where he worked on complex and multimillion-dollar matters, Mr. Amer established ${FIRM.name} to provide clients with a more direct, personalized experience.\n\nThe firm focuses on personal injury matters, medical insurance disputes on behalf of healthcare providers, general and complex commercial law matters, and real estate transactions and related issues. Each case is approached with thorough analysis, careful preparation, and attention to the unique goals and concerns of the client.\n\nAt ${FIRM.name}, clients work directly with their attorney from start to finish. The firm prioritizes clear communication, practical guidance, and accessible legal support. Whether navigating an injury claim, resolving insurance disputes, or handling real estate matters, the goal is to ensure clients understand their options and feel confident in their decisions.\n\n${FIRM.name} is committed to professionalism, transparency, and ethical advocacy. All representation is conducted in accordance with the ${FIRM.location.state} Rules of Professional Conduct, with a firm emphasis on integrity, respect, and client trust.`
     },
     whySolo: {
       heading: "Why Choose a Solo Practice?",
       text: `Unlike large firms where you may be passed between associates and paralegals, here you work directly with an experienced attorney on every aspect of your case. This means faster responses, clearer communication, and a deeper understanding of your unique situation. With a solo practice, you get the individual attention and expertise your case deserves, ensuring that your attorney understands every detail from start to finish.`
     },
     practiceAreas: [
-      { title: "Family Law", desc: "Compassionate guidance through divorce, custody, and family disputes. Direct representation with personalized attention to your family's needs." },
-      { title: "Business Law", desc: "Business formation, contracts, and legal counsel for small businesses and entrepreneurs. Practical solutions tailored to your business." },
-      { title: "Real Estate", desc: "Expert legal support for property transactions, purchases, sales, and real estate disputes. Protecting your property interests." }
+      { title: "Personal Injury", desc: "Comprehensive representation for injury claims. Thorough analysis and careful preparation to protect your rights and pursue fair compensation." },
+      { title: "Medical Insurance Disputes", desc: "Advocating for healthcare providers in medical insurance disputes. Experienced in complex insurance matters and provider representation." },
+      { title: "Commercial Law", desc: "Handling general and complex commercial law matters. Strategic guidance for businesses with attention to your unique goals and concerns." },
+      { title: "Real Estate", desc: "Expert legal support for real estate transactions and related issues. Protecting your interests in property purchases, sales, and disputes." }
     ],
     team: [
       {
         name: "Wael Amer, ESQ",
         role: "Attorney & Founder",
         title: "Your Direct Legal Counsel",
-        bio: `Wael Amer brings over 15 years of hands-on experience in family law, business matters, and real estate. As the sole attorney at ${FIRM.name}, he personally handles every case, ensuring you receive dedicated attention from start to finish. Wael is committed to clear communication, practical solutions, and results that matter to you.`,
+        bio: `Wael Amer is the founder and managing attorney of ${FIRM.name}, a solo practice built on the principle that clients deserve direct access to their lawyer and clear, practical guidance throughout their legal matter. Before opening his own firm, Mr. Amer spent several years at a major law firm, where he worked on complex and multimillion-dollar cases involving a broad range of issues.\n\nHis experience includes representing clients in personal injury matters, assisting healthcare providers in medical insurance disputes, handling and leading general and complex commercial law matters and handling various real estate transactions and related legal issues. Throughout his career, Mr. Amer has developed a disciplined, detail-oriented approach to advocacy, grounded in careful preparation and a commitment to client communication.\n\nAs a solo practitioner, Mr. Amer manages every aspect of each case himself. This structure ensures that clients receive consistent attention, straightforward explanations of their options, and legal strategy tailored to their goals and circumstances. He believes that informed clients make better decisions, and he works to provide the clarity needed to navigate the legal process with confidence.\n\nMr. Amer is dedicated to practicing law with professionalism, integrity, and respect. All representation is carried out in accordance with the ${FIRM.location.state} Rules of Professional Conduct, with a strong focus on ethical advocacy and client trust.`,
         email: FIRM.contact.email
       }
     ],

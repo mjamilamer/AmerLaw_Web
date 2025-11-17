@@ -76,10 +76,13 @@ export function renderAbout(aboutData) {
   const aboutEl = $('#about');
   if (!aboutEl) return;
 
+  // Convert newlines to HTML line breaks
+  const formattedText = escapeHTML(aboutData.text).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+
   setHTML(aboutEl, `
     <div class="container reveal">
       <h2>${escapeHTML(aboutData.heading)}</h2>
-      <p>${escapeHTML(aboutData.text)}</p>
+      <p>${formattedText}</p>
     </div>
   `);
 }
@@ -136,7 +139,11 @@ export function renderTeam(teamMembers) {
     return nameWithoutTitles.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
-  const teamCardsHTML = teamMembers.map(member => `
+  const teamCardsHTML = teamMembers.map(member => {
+    // Convert newlines to HTML line breaks for bio
+    const formattedBio = escapeHTML(member.bio).replace(/\n\n/g, '</p><p class="team-bio">').replace(/\n/g, '<br>');
+    
+    return `
     <article class="team-card" aria-label="Team member: ${escapeHTML(member.name)}">
       <div class="team-avatar" aria-hidden="true">
         <div class="avatar-placeholder" aria-label="${escapeHTML(member.name)} avatar">
@@ -147,13 +154,14 @@ export function renderTeam(teamMembers) {
         <h3>${escapeHTML(member.name)}</h3>
         <p class="team-role">${escapeHTML(member.role)}</p>
         <p class="team-title">${escapeHTML(member.title)}</p>
-        <p class="team-bio">${escapeHTML(member.bio)}</p>
+        <p class="team-bio">${formattedBio}</p>
         <a href="mailto:${escapeHTML(member.email)}" class="team-email" aria-label="Email ${escapeHTML(member.name)}">
           ${escapeHTML(member.email)}
         </a>
       </div>
     </article>
-  `).join('');
+  `;
+  }).join('');
 
   setHTML(teamEl, `
     <div class="container reveal">
