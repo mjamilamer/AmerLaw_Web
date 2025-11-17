@@ -668,6 +668,120 @@
     margin-bottom: 0;
   }
   
+  /* Collapsible Read More Sections */
+  .collapsible-content {
+    position: relative;
+  }
+  .collapsible-preview {
+    display: block;
+  }
+  .collapsible-full {
+    display: none;
+  }
+  .read-more-btn {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 0.625rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    margin-top: 1rem;
+    font-family: var(--font-sans);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .read-more-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .read-more-btn:active {
+    transform: translateY(0);
+  }
+  .read-more-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .read-more-text,
+  .read-less-text {
+    display: inline;
+  }
+  
+  /* Team section read more button */
+  .team-read-more {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Responsive adjustments for collapsible sections */
+  @media (max-width: 768px) {
+    .read-more-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+    }
+    #about .collapsible-preview p,
+    #about .collapsible-full p {
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    .team-bio {
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .read-more-btn {
+      font-size: 0.9rem;
+      padding: 0.625rem 1.25rem;
+    }
+  }
+  
+  /* Responsive Team Bio - Show different paragraph counts */
+  /* Mobile: Show 2 paragraphs by default (always visible, not collapsed) */
+  .team-bio-mobile {
+    display: block;
+  }
+  .team-bio-desktop {
+    display: none;
+  }
+  
+  /* Tablet: Show 2 paragraphs (same as mobile) */
+  @media (min-width: 481px) and (max-width: 1024px) {
+    .team-bio-mobile {
+      display: block;
+    }
+    .team-bio-desktop {
+      display: none;
+    }
+  }
+  
+  /* Desktop: Show all paragraphs (no read more needed if all visible) */
+  @media (min-width: 1025px) {
+    .team-bio-mobile,
+    .team-bio-desktop {
+      display: block;
+    }
+    /* Hide read more button on desktop if all content is visible */
+    .team-card .read-more-btn {
+      display: none;
+    }
+    .team-card .collapsible-full {
+      display: none !important;
+    }
+  }
+  
+  /* Mobile expanded state - for paragraphs beyond the first 2 */
+  .team-bio-mobile-expanded {
+    display: block;
+  }
+  
   /* Why Solo Section */
   #why-solo {
     background: var(--light);
@@ -717,12 +831,14 @@
   .card {
     background: var(--light-alt); 
     border-radius: var(--radius-lg); 
-    padding: 2rem;
+    padding: 0;
     box-shadow: var(--shadow-md);
     transition: all var(--transition-base);
     border: 1px solid rgba(0,0,0,0.05);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
   .card::before {
     content: '';
@@ -741,6 +857,34 @@
     box-shadow: var(--shadow-xl);
     border-color: rgba(166,124,82,0.2);
   }
+  /* Practice Area Image */
+  .practice-area-image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, rgba(13,27,42,0.05) 0%, rgba(27,38,59,0.03) 100%);
+  }
+  .practice-area-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform var(--transition-slow);
+    display: block;
+  }
+  .practice-area-card:hover .practice-area-image {
+    transform: scale(1.05);
+  }
+  
+  /* Practice Area Content */
+  .practice-area-content {
+    padding: 1.75rem 2rem 2rem 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
   .card h3 { 
     margin-bottom: 0.75rem; 
     color: var(--primary);
@@ -756,6 +900,303 @@
     margin-bottom: 0;
     font-weight: 400;
     letter-spacing: 0.01em;
+    flex: 1;
+  }
+  
+  /* Practice Area Card - Clickable */
+  .practice-area-card {
+    cursor: pointer;
+  }
+  .practice-area-card:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .practice-area-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    transition: all var(--transition-base);
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+  .practice-area-card:hover .practice-area-link {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* Practice Area Modal */
+  .practice-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-y: auto;
+  }
+  .practice-modal.practice-modal-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .practice-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(13, 27, 42, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .practice-modal-content {
+    position: relative;
+    background: var(--light-alt);
+    border-radius: var(--radius-lg);
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    box-shadow: var(--shadow-xl);
+    transform: scale(0.9) translateY(20px);
+    transition: transform var(--transition-base);
+    z-index: 1;
+  }
+  
+  /* Ensure modal content doesn't cause horizontal overflow */
+  .practice-modal-body {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .practice-modal-body p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+  .practice-modal.practice-modal-open .practice-modal-content {
+    transform: scale(1) translateY(0);
+  }
+  .practice-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    z-index: 10;
+    font-family: var(--font-sans);
+  }
+  
+  /* Close button on image */
+  .practice-modal-has-image .practice-modal-close {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .practice-modal-has-image .practice-modal-close:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .practice-modal-close:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: rotate(90deg);
+  }
+  .practice-modal-close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Practice Area Modal Image */
+  .practice-modal-image-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, rgba(13,27,42,0.05) 0%, rgba(27,38,59,0.03) 100%);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .practice-modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  
+  .practice-modal-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--primary);
+    margin: 2.5rem 2rem 1rem 2rem;
+    padding-right: 3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  
+  /* Adjust title margin when image is present */
+  .practice-modal-has-image .practice-modal-title {
+    margin-top: 1.5rem;
+  }
+  .practice-modal-body {
+    padding: 0 2rem 1.5rem 2rem;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .practice-modal-body p {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--dark);
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .practice-modal-body p:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Add spacing between paragraphs */
+  .practice-modal-body p + p {
+    margin-top: 1.25rem;
+  }
+  .practice-modal-footer {
+    padding: 1.5rem 2rem 2rem 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  .practice-modal-cta {
+    display: inline-block;
+  }
+  
+  /* Practice Area Card Responsive */
+  @media (max-width: 768px) {
+    .practice-area-image-wrapper {
+      height: 180px;
+    }
+    .practice-area-content {
+      padding: 1.5rem 1.5rem 1.75rem 1.5rem;
+    }
+    .card h3 {
+      font-size: 1.25rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .practice-area-image-wrapper {
+      height: 160px;
+    }
+    .practice-area-content {
+      padding: 1.25rem 1.25rem 1.5rem 1.25rem;
+    }
+  }
+  
+  /* Responsive Modal */
+  @media (max-width: 768px) {
+    .practice-modal-image-wrapper {
+      height: 200px;
+    }
+    .practice-modal-content {
+      width: 95%;
+      max-height: 90vh;
+    }
+    .practice-modal-has-image .practice-modal-title {
+      margin-top: 1.25rem;
+    }
+    .practice-modal-title {
+      margin: 2rem 1.5rem 1rem 1.5rem;
+      padding-right: 2.5rem;
+      font-size: 1.5rem;
+    }
+    .practice-modal-body {
+      padding: 0 1.5rem 1rem 1.5rem;
+    }
+    .practice-modal-body p {
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .practice-modal-body p + p {
+      margin-top: 1rem;
+    }
+    .practice-modal-footer {
+      padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+    }
+    .practice-modal-close {
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 2rem;
+      height: 2rem;
+      font-size: 1.25rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .practice-modal-image-wrapper {
+      height: 180px;
+    }
+    .practice-modal-content {
+      width: 100%;
+      max-height: 100vh;
+      border-radius: 0;
+      overflow-x: hidden; /* Prevent horizontal scrolling on mobile */
+    }
+    .practice-modal-image-wrapper {
+      border-radius: 0;
+    }
+    .practice-modal-has-image .practice-modal-title {
+      margin-top: 1rem;
+    }
+    .practice-modal-title {
+      margin: 1.5rem 1rem 0.75rem 1rem;
+      padding-right: 2rem;
+      font-size: 1.25rem;
+    }
+    .practice-modal-body {
+      padding: 0 1rem 1rem 1rem;
+    }
+    .practice-modal-body p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 0.875rem;
+    }
+    .practice-modal-body p + p {
+      margin-top: 0.875rem;
+    }
+    .practice-modal-footer {
+      padding: 1rem;
+    }
   }
   
   /* TEAM SECTION */

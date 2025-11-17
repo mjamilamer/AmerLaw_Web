@@ -30,10 +30,30 @@ export const siteContent = {
       text: `Unlike large firms where you may be passed between associates and paralegals, here you work directly with an experienced attorney on every aspect of your case. This means faster responses, clearer communication, and a deeper understanding of your unique situation. With a solo practice, you get the individual attention and expertise your case deserves, ensuring that your attorney understands every detail from start to finish.`
     },
     practiceAreas: [
-      { title: "Personal Injury", desc: "Comprehensive representation for injury claims. Thorough analysis and careful preparation to protect your rights and pursue fair compensation." },
-      { title: "Medical Insurance Disputes", desc: "Advocating for healthcare providers in medical insurance disputes. Experienced in complex insurance matters and provider representation." },
-      { title: "Commercial Law", desc: "Handling general and complex commercial law matters. Strategic guidance for businesses with attention to your unique goals and concerns." },
-      { title: "Real Estate", desc: "Expert legal support for real estate transactions and related issues. Protecting your interests in property purchases, sales, and disputes." }
+      { 
+        title: "Personal Injury", 
+        desc: "Comprehensive representation for injury claims. Thorough analysis and careful preparation to protect your rights and pursue fair compensation.",
+        detailed: "Personal injury law encompasses claims arising from accidents, negligence, or intentional harm that result in physical or emotional injury. When you suffer harm due to another party's actions or failure to act, you may be entitled to compensation for medical expenses, lost wages, pain and suffering, and other damages. These cases require careful evaluation of the circumstances, documentation of injuries, and understanding of applicable legal standards. Whether your injury resulted from a motor vehicle accident, workplace incident, premises liability, or other circumstances, thorough preparation and strategic advocacy are essential to protect your rights and pursue fair compensation for your losses.",
+        image: "/cards/PersonalInjury_stock.png"
+      },
+      { 
+        title: "Medical Insurance Disputes", 
+        desc: "Advocating for healthcare providers in medical insurance disputes. Experienced in complex insurance matters and provider representation.",
+        detailed: "Medical insurance disputes involve conflicts between healthcare providers and insurance companies regarding coverage, reimbursement, claim denials, and payment disputes. These matters often require navigating complex insurance policies, understanding medical billing codes, and addressing issues related to claim processing, coverage determinations, and payment delays. Healthcare providers may face challenges when insurance companies deny claims, reduce payments, or delay reimbursements for services rendered. Effective representation in these disputes involves careful review of insurance contracts, medical documentation, and applicable regulations to ensure providers receive proper compensation for the care they provide to patients.",
+        image: "/cards/InsuranceDispute_stock.png"
+      },
+      { 
+        title: "Commercial Law", 
+        desc: "Handling general and complex commercial law matters. Strategic guidance for businesses with attention to your unique goals and concerns.",
+        detailed: "Commercial law encompasses a broad range of legal matters affecting businesses, including contract negotiations, business formation, corporate governance, commercial transactions, and dispute resolution. Whether you are starting a new business, entering into commercial agreements, or facing business disputes, understanding your legal rights and obligations is crucial. Commercial law matters can involve contract drafting and review, partnership agreements, employment issues, regulatory compliance, and litigation. Each business situation requires careful analysis of the specific circumstances, applicable laws, and strategic considerations to protect your interests and achieve your business objectives.",
+        image: "/cards/Corporate_stock.png"
+      },
+      { 
+        title: "Real Estate", 
+        desc: "Expert legal support for real estate transactions and related issues. Protecting your interests in property purchases, sales, and disputes.",
+        detailed: "Real estate law covers transactions involving property, including purchases, sales, leases, development, and disputes. Whether you are buying or selling property, entering into lease agreements, dealing with zoning issues, or facing property disputes, legal guidance can help protect your interests throughout the process. Real estate transactions involve complex documentation, title issues, financing arrangements, and regulatory requirements. Common matters include purchase and sale agreements, lease negotiations, property development, easements, boundary disputes, and landlord-tenant issues. Careful review of documents, understanding of local regulations, and strategic negotiation are essential to ensure your real estate transactions proceed smoothly and your interests are protected.",
+        image: "/cards/RealEstate_stock.png"
+      }
     ],
     team: [
       {

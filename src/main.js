@@ -56,6 +56,12 @@ function init() {
     // Initialize contact form toggle
     initContactFormToggle();
 
+    // Initialize collapsible read more sections
+    initCollapsibleSections();
+
+    // Initialize practice area modals
+    initPracticeAreaModals();
+
     // Initialize FAQ accordion
     initFAQ();
 
@@ -122,6 +128,210 @@ function initHeroRotation() {
       heroEl.classList.remove('hero-dark');
     }
   }, 8000);
+}
+
+/**
+ * Initialize collapsible read more sections
+ */
+function initCollapsibleSections() {
+  // Handle About section read more
+  const aboutReadMoreBtn = document.querySelector('#about .read-more-btn');
+  if (aboutReadMoreBtn) {
+    aboutReadMoreBtn.addEventListener('click', function() {
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      const preview = this.parentElement.querySelector('.collapsible-preview');
+      const full = this.parentElement.querySelector('.collapsible-full');
+      const readMoreText = this.querySelector('.read-more-text');
+      const readLessText = this.querySelector('.read-less-text');
+
+      if (isExpanded) {
+        // Collapse
+        preview.style.display = 'block';
+        full.style.display = 'none';
+        readMoreText.style.display = 'inline';
+        readLessText.style.display = 'none';
+        this.setAttribute('aria-expanded', 'false');
+      } else {
+        // Expand
+        preview.style.display = 'none';
+        full.style.display = 'block';
+        readMoreText.style.display = 'none';
+        readLessText.style.display = 'inline';
+        this.setAttribute('aria-expanded', 'true');
+        // Smooth scroll to show more content
+        this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+
+  // Handle Team section read more buttons
+  const teamReadMoreBtns = document.querySelectorAll('.team-read-more');
+  teamReadMoreBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      const target = document.getElementById(targetId);
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      const preview = this.parentElement.querySelector('.collapsible-preview');
+      const readMoreText = this.querySelector('.read-more-text');
+      const readLessText = this.querySelector('.read-less-text');
+
+      if (isExpanded) {
+        // Collapse
+        preview.style.display = 'block';
+        if (target) target.style.display = 'none';
+        readMoreText.style.display = 'inline';
+        readLessText.style.display = 'none';
+        this.setAttribute('aria-expanded', 'false');
+      } else {
+        // Expand
+        preview.style.display = 'none';
+        if (target) target.style.display = 'block';
+        readMoreText.style.display = 'none';
+        readLessText.style.display = 'inline';
+        this.setAttribute('aria-expanded', 'true');
+        // Smooth scroll to show more content
+        this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  });
+}
+
+/**
+ * Initialize practice area modals
+ */
+function initPracticeAreaModals() {
+  const modal = document.getElementById('practice-modal');
+  const modalOverlay = modal?.querySelector('.practice-modal-overlay');
+  const modalClose = modal?.querySelector('.practice-modal-close');
+  const modalTitle = modal?.querySelector('#practice-modal-title');
+  const modalBody = modal?.querySelector('.practice-modal-body');
+  const modalImageWrapper = modal?.querySelector('#practice-modal-image-wrapper');
+  const modalImage = modal?.querySelector('#practice-modal-image');
+  const practiceCards = document.querySelectorAll('.practice-area-card');
+
+  if (!modal || !practiceCards.length) return;
+
+  function openModal(title, detailed, image) {
+    if (!modalTitle || !modalBody) return;
+    
+    modalTitle.textContent = title;
+    
+    // Format detailed text into paragraphs
+    // Split by sentences that end with periods, then group into logical paragraphs
+    // Each sentence ending with a period followed by a capital letter starts a potential new paragraph
+    let formattedText = detailed;
+    
+    // First, ensure proper spacing around periods
+    formattedText = formattedText.replace(/\.\s+/g, '. ');
+    
+    // Split into sentences (period followed by space and capital letter)
+    const sentences = formattedText.split(/(?<=\.)\s+(?=[A-Z])/).filter(s => s.trim().length > 0);
+    
+    // Group sentences into paragraphs (2-3 sentences per paragraph for readability)
+    const paragraphs = [];
+    let currentParagraph = [];
+    
+    sentences.forEach((sentence, index) => {
+      const trimmed = sentence.trim();
+      if (!trimmed) return;
+      
+      currentParagraph.push(trimmed);
+      
+      // Create a new paragraph every 2-3 sentences, or if sentence is very long
+      const isLongSentence = trimmed.length > 200;
+      const shouldBreak = currentParagraph.length >= 2 && (
+        currentParagraph.length >= 3 || 
+        isLongSentence ||
+        index === sentences.length - 1 // Always break on last sentence
+      );
+      
+      if (shouldBreak) {
+        paragraphs.push(currentParagraph.join(' '));
+        currentParagraph = [];
+      }
+    });
+    
+    // Add any remaining sentences
+    if (currentParagraph.length > 0) {
+      paragraphs.push(currentParagraph.join(' '));
+    }
+    
+    // Format as HTML paragraphs with proper spacing
+    formattedText = paragraphs
+      .map(p => `<p>${p}</p>`)
+      .join('');
+    
+    modalBody.innerHTML = formattedText;
+    
+    // Handle image
+    if (image && modalImage && modalImageWrapper) {
+      modalImage.src = image;
+      modalImage.alt = title;
+      modalImageWrapper.style.display = 'block';
+      modal.classList.add('practice-modal-has-image');
+    } else if (modalImageWrapper) {
+      modalImageWrapper.style.display = 'none';
+      modal.classList.remove('practice-modal-has-image');
+    }
+    
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('practice-modal-open');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflowX = 'hidden'; // Prevent horizontal scrolling
+    
+    // Focus management
+    modalClose?.focus();
+  }
+
+  function closeModal() {
+    modal.setAttribute('aria-hidden', 'true');
+    modal.classList.remove('practice-modal-open');
+    document.body.style.overflow = ''; // Restore scrolling
+    document.body.style.overflowX = ''; // Restore horizontal scrolling
+  }
+
+  // Open modal on card click
+  practiceCards.forEach(card => {
+    const handleClick = () => {
+      const title = card.getAttribute('data-practice-title');
+      const detailed = card.getAttribute('data-practice-detailed');
+      const image = card.getAttribute('data-practice-image');
+      if (title && detailed) {
+        openModal(title, detailed, image);
+      }
+    };
+
+    card.addEventListener('click', handleClick);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleClick();
+      }
+    });
+  });
+
+  // Close modal handlers
+  modalClose?.addEventListener('click', closeModal);
+  modalOverlay?.addEventListener('click', closeModal);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('practice-modal-open')) {
+      closeModal();
+    }
+  });
+
+  // Close modal CTA button - expand contact form
+  const modalCTA = modal.querySelector('.practice-modal-cta');
+  if (modalCTA) {
+    modalCTA.addEventListener('click', () => {
+      closeModal();
+      // Small delay to allow modal to close first
+      setTimeout(() => {
+        expandContactForm();
+      }, 300);
+    });
+  }
 }
 
 /**

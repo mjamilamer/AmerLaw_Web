@@ -249,10 +249,10 @@ export function validateFile(file) {
     return { isValid: false, error: 'Invalid file' };
   }
   
-  // Size validation (10MB max)
-  const maxSize = 10 * 1024 * 1024;
+  // Size validation (2MB per file to stay within 10MB/month Netlify Forms limit)
+  const maxSize = 2 * 1024 * 1024; // 2MB per file
   if (file.size > maxSize) {
-    return { isValid: false, error: `File "${file.name}" exceeds 10MB limit` };
+    return { isValid: false, error: `File "${file.name}" exceeds 2MB limit per file` };
   }
   
   if (file.size === 0) {

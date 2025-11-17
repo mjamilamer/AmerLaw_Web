@@ -76,7 +76,7 @@ export function renderStats(stats) {
 }
 
 /**
- * Render about section
+ * Render about section with collapsible read more
  */
 export function renderAbout(aboutData) {
   const aboutEl = $('#about');
@@ -89,7 +89,18 @@ export function renderAbout(aboutData) {
   setHTML(aboutEl, `
     <div class="container reveal">
       <h2>${escapeHTML(aboutData.heading)}</h2>
-      ${formattedText}
+      <div class="collapsible-content">
+        <div class="collapsible-preview">
+          ${paragraphs.slice(0, 2).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')}
+        </div>
+        <div class="collapsible-full" style="display: none;">
+          ${formattedText}
+        </div>
+        <button type="button" class="read-more-btn" aria-expanded="false" aria-controls="about-full-content">
+          <span class="read-more-text">Read More</span>
+          <span class="read-less-text" style="display: none;">Read Less</span>
+        </button>
+      </div>
     </div>
   `);
 }
@@ -110,16 +121,32 @@ export function renderWhySolo(whySoloData) {
 }
 
 /**
- * Render practice areas section
+ * Render practice areas section with clickable modals
  */
 export function renderPracticeAreas(areas) {
   const practiceEl = $('#practice');
   if (!practiceEl) return;
 
-  const cardsHTML = areas.map(area => `
-    <article class="card" aria-label="Practice area: ${escapeHTML(area.title)}">
-      <h3>${escapeHTML(area.title)}</h3>
-      <p>${escapeHTML(area.desc)}</p>
+  const cardsHTML = areas.map((area, index) => `
+    <article class="card practice-area-card" 
+             aria-label="Practice area: ${escapeHTML(area.title)}" 
+             role="button"
+             tabindex="0"
+             data-practice-index="${index}"
+             data-practice-title="${escapeHTML(area.title)}"
+             data-practice-desc="${escapeHTML(area.desc)}"
+             data-practice-detailed="${escapeHTML(area.detailed || area.desc)}"
+             data-practice-image="${area.image || ''}">
+      ${area.image ? `
+      <div class="practice-area-image-wrapper">
+        <img src="${area.image}" alt="${escapeHTML(area.title)}" class="practice-area-image" loading="lazy" decoding="async" />
+      </div>
+      ` : ''}
+      <div class="practice-area-content">
+        <h3>${escapeHTML(area.title)}</h3>
+        <p>${escapeHTML(area.desc)}</p>
+        <span class="practice-area-link">Learn More →</span>
+      </div>
     </article>
   `).join('');
 
@@ -128,6 +155,21 @@ export function renderPracticeAreas(areas) {
       <h2>Practice Areas</h2>
       <div class="grid" role="list">
         ${cardsHTML}
+      </div>
+    </div>
+    <!-- Practice Area Modal -->
+    <div id="practice-modal" class="practice-modal" role="dialog" aria-labelledby="practice-modal-title" aria-hidden="true">
+      <div class="practice-modal-overlay"></div>
+      <div class="practice-modal-content">
+        <button class="practice-modal-close" aria-label="Close modal">×</button>
+        <div class="practice-modal-image-wrapper" id="practice-modal-image-wrapper" style="display: none;">
+          <img id="practice-modal-image" class="practice-modal-image" alt="" loading="lazy" decoding="async" />
+        </div>
+        <h2 id="practice-modal-title" class="practice-modal-title"></h2>
+        <div class="practice-modal-body"></div>
+        <div class="practice-modal-footer">
+          <a href="#contact" class="btn btn-primary practice-modal-cta">Request a Consultation</a>
+        </div>
       </div>
     </div>
   `);
@@ -146,10 +188,19 @@ export function renderTeam(teamMembers) {
     return nameWithoutTitles.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
-  const teamCardsHTML = teamMembers.map(member => {
+  const teamCardsHTML = teamMembers.map((member, index) => {
     // Convert double newlines to paragraph breaks, single newlines to line breaks
     const bioParagraphs = escapeHTML(member.bio).split(/\n\n+/).filter(p => p.trim());
     const formattedBio = bioParagraphs.map(p => `<p class="team-bio">${p.replace(/\n/g, '<br>')}</p>`).join('');
+    
+    // Responsive preview: Always show at least 2 paragraphs, more on larger screens
+    // Mobile: Show 2 paragraphs (always visible, not collapsed)
+    // Tablet: Show 2 paragraphs (always visible)
+    // Desktop: Show all paragraphs (always visible)
+    const firstParagraph = bioParagraphs[0] ? `<p class="team-bio team-bio-mobile team-bio-tablet team-bio-desktop">${bioParagraphs[0].replace(/\n/g, '<br>')}</p>` : '';
+    const secondParagraph = bioParagraphs[1] ? `<p class="team-bio team-bio-mobile team-bio-tablet team-bio-desktop">${bioParagraphs[1].replace(/\n/g, '<br>')}</p>` : '';
+    const remainingParagraphs = bioParagraphs.slice(2).map(p => `<p class="team-bio team-bio-desktop">${p.replace(/\n/g, '<br>')}</p>`).join('');
+    const hasMoreContent = bioParagraphs.length > 2; // Only show read more if there are more than 2 paragraphs
     
     return `
     <article class="team-card" aria-label="Team member: ${escapeHTML(member.name)}">
@@ -162,7 +213,22 @@ export function renderTeam(teamMembers) {
         <h3>${escapeHTML(member.name)}</h3>
         <p class="team-role">${escapeHTML(member.role)}</p>
         <p class="team-title">${escapeHTML(member.title)}</p>
-        ${formattedBio}
+        <div class="collapsible-content">
+          <div class="collapsible-preview">
+            ${firstParagraph}
+            ${secondParagraph}
+            ${remainingParagraphs}
+          </div>
+          ${hasMoreContent ? `
+          <div class="collapsible-full" id="team-bio-${index}" style="display: none;">
+            ${bioParagraphs.slice(2).map(p => `<p class="team-bio team-bio-mobile-expanded">${p.replace(/\n/g, '<br>')}</p>`).join('')}
+          </div>
+          <button type="button" class="read-more-btn team-read-more" aria-expanded="false" aria-controls="team-bio-${index}" data-target="team-bio-${index}">
+            <span class="read-more-text">Read More</span>
+            <span class="read-less-text" style="display: none;">Read Less</span>
+          </button>
+          ` : ''}
+        </div>
         <a href="mailto:${escapeHTML(member.email)}" class="team-email" aria-label="Email ${escapeHTML(member.name)}">
           ${escapeHTML(member.email)}
         </a>
@@ -299,7 +365,7 @@ export function renderContact(contactData) {
               <div id="file-list" class="file-list" role="list" aria-live="polite"></div>
             </div>
             <p id="documents-help" class="form-help-text">
-              Accepted formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 10MB per file)
+              Accepted formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 2MB per file, 5 files max, 10MB total)
             </p>
             <span id="documents-error" class="error-message" role="alert" aria-live="polite"></span>
           </div>

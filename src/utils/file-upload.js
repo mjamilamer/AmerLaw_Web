@@ -72,23 +72,33 @@ export function initFileUpload(form) {
         `${selectedFiles.length} file${selectedFiles.length > 1 ? 's' : ''} selected`;
     }
 
-    fileList.innerHTML = selectedFiles.map((file, index) => `
-      <div class="file-list-item" role="listitem">
-        <div class="file-list-item-info">
-          <span class="file-list-item-icon">${getFileIcon(file.name)}</span>
-          <span class="file-list-item-name" title="${file.name}">${file.name}</span>
-          <span class="file-list-item-size">${formatFileSize(file.size)}</span>
+    // Calculate total size
+    const totalSize = selectedFiles.reduce((sum, f) => sum + f.size, 0);
+    const maxTotalSize = 10 * 1024 * 1024; // 10MB
+    
+    fileList.innerHTML = `
+      ${selectedFiles.map((file, index) => `
+        <div class="file-list-item" role="listitem">
+          <div class="file-list-item-info">
+            <span class="file-list-item-icon">${getFileIcon(file.name)}</span>
+            <span class="file-list-item-name" title="${file.name}">${file.name}</span>
+            <span class="file-list-item-size">${formatFileSize(file.size)}</span>
+          </div>
+          <button 
+            type="button" 
+            class="file-list-item-remove" 
+            aria-label="Remove ${file.name}"
+            data-index="${index}"
+          >
+            ×
+          </button>
         </div>
-        <button 
-          type="button" 
-          class="file-list-item-remove" 
-          aria-label="Remove ${file.name}"
-          data-index="${index}"
-        >
-          ×
-        </button>
+      `).join('')}
+      <div class="file-list-total" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.1); font-size: 0.9rem; color: var(--dark);">
+        <strong>Total: ${formatFileSize(totalSize)} / ${formatFileSize(maxTotalSize)}</strong>
+        ${selectedFiles.length >= 5 ? '<span style="color: #dc3545; margin-left: 0.5rem;">(Max 5 files)</span>' : ''}
       </div>
-    `).join('');
+    `;
 
     // Add remove button handlers
     fileList.querySelectorAll('.file-list-item-remove').forEach(button => {
@@ -110,7 +120,11 @@ export function initFileUpload(form) {
    * Handle file selection
    */
   function handleFiles(files) {
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    // Reduced limit to stay within 10MB/month Netlify Forms limit
+    // Allow 2MB per file, max 5 files = 10MB total
+    const maxSize = 2 * 1024 * 1024; // 2MB per file
+    const maxFiles = 5; // Maximum 5 files
+    const maxTotalSize = 10 * 1024 * 1024; // 10MB total limit
     const allowedTypes = [
       'application/pdf',
       'application/msword',
@@ -124,7 +138,20 @@ export function initFileUpload(form) {
     Array.from(files).forEach(file => {
       // Check file size
       if (file.size > maxSize) {
-        alert(`File "${file.name}" exceeds 10MB limit and was not added.`);
+        alert(`File "${file.name}" exceeds 2MB limit per file. Maximum file size is 2MB.`);
+        return;
+      }
+
+      // Check total file count
+      if (selectedFiles.length >= maxFiles) {
+        alert(`Maximum ${maxFiles} files allowed. Please remove some files before adding more.`);
+        return;
+      }
+
+      // Check total size
+      const currentTotalSize = selectedFiles.reduce((sum, f) => sum + f.size, 0);
+      if (currentTotalSize + file.size > maxTotalSize) {
+        alert(`Total file size would exceed 10MB limit. Current total: ${formatFileSize(currentTotalSize)}. Please remove some files.`);
         return;
       }
 
