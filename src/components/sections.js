@@ -35,6 +35,9 @@ export function renderHero(heroData) {
   setHTML(heroEl, `
     <div class="hero-bg hero-bg-light"></div>
     <div class="hero-bg hero-bg-dark"></div>
+    <div class="logo-watermark hero-watermark">
+      <img src="/Forma_logo.png" alt="Amer Law LLC Logo Watermark" />
+    </div>
     <div class="overlay reveal" role="banner">
       <h1>${escapeHTML(heroData.title)}</h1>
       <p>${escapeHTML(heroData.subtitle)}</p>

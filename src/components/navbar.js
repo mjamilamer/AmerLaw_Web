@@ -11,26 +11,7 @@ export function renderNavbar(navItems) {
   // Clear existing content
   navbarEl.innerHTML = '';
 
-  // Add logo (CSS watermark design - non-clickable)
-  const logoContainer = createElement('div', {
-    className: 'navbar-logo'
-  });
-  const logoWatermark = createElement('div', {
-    className: 'logo-watermark'
-  });
-  const logoA = createElement('span', {
-    className: 'logo-letter logo-a',
-    textContent: 'A'
-  });
-  const logoL = createElement('span', {
-    className: 'logo-letter logo-l',
-    textContent: 'L'
-  });
-  logoWatermark.appendChild(logoA);
-  logoWatermark.appendChild(logoL);
-  logoContainer.appendChild(logoWatermark);
-  navbarEl.appendChild(logoContainer);
-
+  // Navigation links first (left side)
   const nav = createElement('nav', {
     role: 'navigation',
     'aria-label': 'Main navigation'
@@ -47,6 +28,18 @@ export function renderNavbar(navItems) {
 
   navLinks.forEach(link => nav.appendChild(link));
   navbarEl.appendChild(nav);
+
+  // Logo in top right
+  const logoContainer = createElement('div', {
+    className: 'navbar-logo'
+  });
+  const logoImg = createElement('img', {
+    src: '/Forma_logo.png',
+    alt: 'Amer Law LLC Logo',
+    className: 'logo-img'
+  });
+  logoContainer.appendChild(logoImg);
+  navbarEl.appendChild(logoContainer);
 
   // Mobile menu button
   const menuButton = createElement('button', {
@@ -113,26 +106,7 @@ export function renderNavbarForLegalPage(navItems) {
   // Clear existing content
   navbarEl.innerHTML = '';
 
-  // Add logo (CSS watermark design - non-clickable)
-  const logoContainer = createElement('div', {
-    className: 'navbar-logo'
-  });
-  const logoWatermark = createElement('div', {
-    className: 'logo-watermark'
-  });
-  const logoA = createElement('span', {
-    className: 'logo-letter logo-a',
-    textContent: 'A'
-  });
-  const logoL = createElement('span', {
-    className: 'logo-letter logo-l',
-    textContent: 'L'
-  });
-  logoWatermark.appendChild(logoA);
-  logoWatermark.appendChild(logoL);
-  logoContainer.appendChild(logoWatermark);
-  navbarEl.appendChild(logoContainer);
-
+  // Navigation links first (left side)
   const nav = createElement('nav', {
     role: 'navigation',
     'aria-label': 'Main navigation'
@@ -153,6 +127,18 @@ export function renderNavbarForLegalPage(navItems) {
 
   navLinks.forEach(link => nav.appendChild(link));
   navbarEl.appendChild(nav);
+
+  // Logo in top right
+  const logoContainer = createElement('div', {
+    className: 'navbar-logo'
+  });
+  const logoImg = createElement('img', {
+    src: '../Forma_logo.png',
+    alt: 'Amer Law LLC Logo',
+    className: 'logo-img'
+  });
+  logoContainer.appendChild(logoImg);
+  navbarEl.appendChild(logoContainer);
 
   // Mobile menu button
   const menuButton = createElement('button', {

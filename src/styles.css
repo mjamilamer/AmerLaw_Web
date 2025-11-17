@@ -84,7 +84,9 @@
     padding: 0.75rem 2rem;
   }
   .navbar-logo {
-    display: flex; align-items: center;
+    display: flex; 
+    align-items: center;
+    justify-content: flex-end;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -92,70 +94,70 @@
     cursor: default;
     padding: 0.25rem 0;
     pointer-events: none;
+    order: 3; /* Position on the right */
   }
-  .logo-watermark {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-serif);
-    font-weight: 600;
-    letter-spacing: 0;
-    opacity: 0.92;
+  .logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Make logo white for dark navbar */
     transition: all var(--transition-base);
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
+    opacity: 0.95;
   }
-  .logo-watermark::before {
-    display: none;
-  }
-  .logo-letter {
-    display: inline-block;
-    color: #fff;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.1);
-    transition: all var(--transition-base);
-    position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    pointer-events: none;
-  }
-  .logo-a {
-    font-size: 2.1rem;
-    line-height: 1;
-    margin-right: -0.15em;
-    position: relative;
-    z-index: 2;
-    font-style: italic;
-    transform: translateY(-0.15em) rotate(-2deg);
-  }
-  .logo-l {
-    font-size: 1.85rem;
-    line-height: 1;
-    margin-left: -0.15em;
-    transform: translateY(0.1em) rotate(-1deg);
-    position: relative;
-    z-index: 1;
-    opacity: 0.88;
-    font-weight: 500;
-  }
-  #navbar.scrolled .logo-a {
-    font-size: 1.7rem;
-  }
-  #navbar.scrolled .logo-l {
-    font-size: 1.5rem;
+  #navbar.scrolled .logo-img {
+    height: 40px;
+    opacity: 1;
   }
   @media (max-width: 768px) {
-    .logo-a {
-      font-size: 1.6rem;
+    .logo-img {
+      height: 40px;
     }
-    .logo-l {
-      font-size: 1.4rem;
+    #navbar.scrolled .logo-img {
+      height: 35px;
+    }
+  }
+  
+  /* Watermark logo styles for use elsewhere */
+  .logo-watermark {
+    position: absolute;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .logo-watermark img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    filter: grayscale(100%);
+  }
+  /* Hero watermark - positioned center-right */
+  .hero-watermark {
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    opacity: 0.04;
+    max-width: 400px;
+    z-index: 1;
+  }
+  .hero-watermark img {
+    filter: brightness(0) invert(1) grayscale(100%);
+    opacity: 0.5;
+  }
+  @media (max-width: 768px) {
+    .hero-watermark {
+      max-width: 250px;
+      right: 2%;
+      opacity: 0.03;
     }
   }
   #navbar nav {
-    display: flex; align-items: center; gap: 0.5rem;
+    display: flex; 
+    align-items: center; 
+    gap: 0.5rem;
+    order: 1; /* Position on the left */
+    flex: 1; /* Take available space */
   }
   #navbar nav a {
     color: #fff; text-decoration: none; font-weight: 500;
@@ -195,9 +197,15 @@
   
   /* Mobile Menu Toggle */
   .menu-toggle {
-    display: none; flex-direction: column; gap: 4px;
-    background: transparent; border: none; cursor: pointer;
-    padding: 0.5rem; z-index: 1001;
+    display: none; 
+    flex-direction: column; 
+    gap: 4px;
+    background: transparent; 
+    border: none; 
+    cursor: pointer;
+    padding: 0.5rem; 
+    z-index: 1001;
+    order: 2; /* Position between nav and logo on mobile */
   }
   .menu-toggle span {
     width: 25px; height: 3px; background: #fff;
@@ -215,29 +223,32 @@
   
   @media (max-width: 768px) {
     #navbar {
-      flex-wrap: wrap; justify-content: space-between;
-    }
-    .navbar-logo {
-      order: 1;
-    }
-    .menu-toggle {
-      display: flex;
-      order: 2;
+      flex-wrap: wrap; 
+      justify-content: space-between;
     }
     #navbar nav {
-      display: none; width: 100%; flex-direction: column;
-      margin-top: 1rem; gap: 0.5rem;
+      display: none; 
+      width: 100%; 
+      flex-direction: column;
+      margin-top: 1rem; 
+      gap: 0.5rem;
       order: 3;
     }
     #navbar.menu-open nav {
       display: flex;
     }
     #navbar nav a {
-      width: 100%; text-align: center; padding: 1rem;
+      width: 100%; 
+      text-align: center; 
+      padding: 1rem;
       background: rgba(255,255,255,0.1);
     }
-    .logo-img {
-      height: 40px;
+    .navbar-logo {
+      order: 1; /* Logo first on mobile */
+    }
+    .menu-toggle {
+      display: flex;
+      order: 2; /* Menu button second on mobile */
     }
   }
   
