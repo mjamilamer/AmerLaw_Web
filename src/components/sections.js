@@ -36,7 +36,7 @@ export function renderHero(heroData) {
     <div class="hero-bg hero-bg-light"></div>
     <div class="hero-bg hero-bg-dark"></div>
     <div class="logo-watermark hero-watermark">
-      <img src="/Forma_logo.png" alt="Amer Law LLC Logo Watermark" />
+      <img src="/Forma_logo.png" alt="Amer Law LLC Logo Watermark" loading="lazy" decoding="async" />
     </div>
     <div class="overlay reveal" role="banner">
       <div class="hero-title-group">
@@ -309,7 +309,7 @@ export function renderContact(contactData) {
       <div class="contact-info">
         <h3>Get in Touch</h3>
         <div class="business-card-wrapper">
-          <img src="/Business_card.png" alt="Amer Law LLC Business Card" class="business-card-img" />
+          <img src="/Business_card.png" alt="Amer Law LLC Business Card" class="business-card-img" loading="lazy" decoding="async" />
         </div>
         <address>
           <p>

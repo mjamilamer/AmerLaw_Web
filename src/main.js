@@ -68,7 +68,9 @@ function init() {
     // Initialize hero image rotation
     initHeroRotation();
 
-    console.log('Application initialized successfully');
+    if (import.meta.env.DEV) {
+      console.log('Application initialized successfully');
+    }
   } catch (error) {
     console.error('Error initializing application:', error);
   }

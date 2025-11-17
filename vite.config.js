@@ -10,6 +10,8 @@ export default defineConfig({
   build: {
     outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
+    cssCodeSplit: true,
+    minify: 'esbuild', // Fast and efficient minification
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'src/index.html'),
@@ -18,8 +20,10 @@ export default defineConfig({
         'accessibility-statement': resolve(__dirname, 'src/accessibility-statement/index.html'),
         'disclaimer': resolve(__dirname, 'src/disclaimer/index.html'),
         'success': resolve(__dirname, 'src/success.html'),
-      }
-    }
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+    assetsInlineLimit: 4096, // Inline small assets as base64
   },
   server: {
     port: 3000,

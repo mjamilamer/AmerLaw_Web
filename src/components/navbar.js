@@ -18,7 +18,10 @@ export function renderNavbar(navItems) {
   const logoImg = createElement('img', {
     src: '/Transparent_Logo.png',
     alt: 'Amer Law LLC Logo',
-    className: 'logo-img'
+    className: 'logo-img',
+    loading: 'eager',
+    fetchpriority: 'high',
+    decoding: 'async'
   });
   logoContainer.appendChild(logoImg);
   navbarEl.appendChild(logoContainer);
@@ -113,7 +116,10 @@ export function renderNavbarForLegalPage(navItems) {
   const logoImg = createElement('img', {
     src: '../Transparent_Logo.png',
     alt: 'Amer Law LLC Logo',
-    className: 'logo-img'
+    className: 'logo-img',
+    loading: 'eager',
+    fetchpriority: 'high',
+    decoding: 'async'
   });
   logoContainer.appendChild(logoImg);
   navbarEl.appendChild(logoContainer);
