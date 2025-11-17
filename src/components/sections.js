@@ -221,7 +221,7 @@ export function renderTeam(teamMembers) {
           </div>
           ${hasMoreContent ? `
           <div class="collapsible-full" id="team-bio-${index}" style="display: none;">
-            ${bioParagraphs.slice(2).map(p => `<p class="team-bio team-bio-mobile-expanded">${p.replace(/\n/g, '<br>')}</p>`).join('')}
+            ${formattedBio}
           </div>
           <button type="button" class="read-more-btn team-read-more" aria-expanded="false" aria-controls="team-bio-${index}" data-target="team-bio-${index}">
             <span class="read-more-text">Read More</span>
