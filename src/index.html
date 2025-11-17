@@ -39,25 +39,7 @@
 
     <footer id="footer"></footer>
 
-    <!-- Hidden form for Netlify Forms detection (required for JavaScript-rendered forms) -->
-    <!-- This form is detected by Netlify at build time and must match the JavaScript-rendered form structure -->
-    <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field" style="display: none;">
-      <input type="hidden" name="form-name" value="contact" />
-      <p style="display: none;">
-        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-      </p>
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <input type="tel" name="phone" />
-      <select name="practice-area">
-        <option value="Personal Injury">Personal Injury</option>
-        <option value="Medical Insurance Disputes">Medical Insurance Disputes</option>
-        <option value="Commercial Law">Commercial Law</option>
-        <option value="Real Estate">Real Estate</option>
-      </select>
-      <textarea name="message"></textarea>
-      <input type="file" name="documents" multiple />
-    </form>
+    <!-- Netlify Forms removed - now using database + Resend email service -->
 
     <script type="module" src="./main.js"></script>
   </body>

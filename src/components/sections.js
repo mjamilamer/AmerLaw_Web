@@ -205,8 +205,8 @@ export function renderContact(contactData) {
             Send a Message
           </button>
         </div>
-        <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field" novalidate aria-label="Contact form" id="contact-form" class="contact-form-collapsed">
-          <input type="hidden" name="form-name" value="contact" />
+        <form name="contact" method="POST" enctype="multipart/form-data" novalidate aria-label="Contact form" id="contact-form" class="contact-form-collapsed">
+          <!-- Honeypot field for spam protection -->
           <p style="display: none;">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
           </p>

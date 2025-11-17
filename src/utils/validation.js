@@ -220,68 +220,65 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
         }
       }
       
-      // Submit via AJAX to Netlify Forms
-      // Netlify Forms endpoint is the root path "/"
-      const formAction = form.action || '/';
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
-      
-      // Prepare fetch options according to Netlify docs
-      const fetchOptions = {
-        method: 'POST',
-        body: hasFiles ? sanitizedFormData : new URLSearchParams(sanitizedFormData).toString(),
-        signal: controller.signal
+      // Extract form data for submission
+      const formDataForSubmission = {
+        name: sanitizedFormData.get('name') || '',
+        email: sanitizedFormData.get('email') || '',
+        phone: sanitizedFormData.get('phone') || '',
+        'practice-area': sanitizedFormData.get('practice-area') || '',
+        message: sanitizedFormData.get('message') || '',
+        files: fileInput?.files ? Array.from(fileInput.files) : []
       };
-      
-      // For text-only forms, add Content-Type header
-      // For file uploads, don't include Content-Type (browser sets it automatically)
-      if (!hasFiles) {
-        fetchOptions.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+
+      // Check honeypot field (spam protection)
+      const botField = sanitizedFormData.get('bot-field');
+      if (botField && botField.trim() !== '') {
+        // Bot detected - silently fail
+        console.warn('Bot detected via honeypot field');
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.classList.remove('loading');
+          submitButton.textContent = originalText;
+        }
+        return;
       }
+
+      // Submit via AJAX to our Netlify Function (saves to DB + sends email)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
       
       let response;
       try {
-        response = await fetch(formAction, fetchOptions);
+        response = await fetch('/.netlify/functions/save-contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formDataForSubmission),
+          signal: controller.signal
+        });
         clearTimeout(timeoutId);
       } catch (fetchError) {
         clearTimeout(timeoutId);
-        // If fetch fails, fall back to regular form submission
         if (fetchError.name === 'AbortError') {
-          throw new Error('Request timed out');
+          throw new Error('Request timed out. Please try again.');
         }
-        // For network errors, use regular form submission
-        console.warn('AJAX submission failed, using regular form submission:', fetchError);
-        form.submit();
-        return; // Let the form submit normally
+        throw new Error('Network error. Please check your connection and try again.');
       }
 
-      // Netlify Forms returns 200 on success
+      // Check response
       if (response.ok || response.status === 200) {
-        // Extract form data for database
-        const formDataForDb = {
-          name: sanitizedFormData.get('name') || '',
-          email: sanitizedFormData.get('email') || '',
-          phone: sanitizedFormData.get('phone') || '',
-          'practice-area': sanitizedFormData.get('practice-area') || '',
-          message: sanitizedFormData.get('message') || '',
-          files: fileInput?.files ? Array.from(fileInput.files) : []
-        };
-
-        // Save to database (non-blocking - don't fail form if database save fails)
-        try {
-          // Import dynamically to avoid issues if database is not configured
-          const { saveContactSubmission } = await import('./database.js');
-          await saveContactSubmission(formDataForDb);
-        } catch (dbError) {
-          // Log error but don't fail the form submission
-          console.warn('Database save failed (form submission still succeeded):', dbError);
-        }
+        const result = await response.json();
 
         // Show success message
         const successMessage = document.getElementById('form-success-message');
         if (successMessage) {
+          let messageText = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
+          if (result.emailSent === false) {
+            messageText += ' (Note: Email notification may be delayed)';
+          }
           successMessage.style.display = 'block';
-          successMessage.innerHTML = '<p>✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.</p>';
+          successMessage.innerHTML = `<p>${messageText}</p>`;
           // Reset error styling if it was set
           successMessage.style.background = '';
           successMessage.style.borderColor = '';

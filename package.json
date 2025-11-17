@@ -17,6 +17,7 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
-    "@netlify/neon": "^0.1.0"
+    "@netlify/neon": "^0.1.0",
+    "resend": "^6.4.2"
   }
 }
