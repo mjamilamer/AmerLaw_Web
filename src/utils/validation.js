@@ -257,6 +257,26 @@ export function initFormValidation(form, allowedPracticeAreas = []) {
 
       // Netlify Forms returns 200 on success
       if (response.ok || response.status === 200) {
+        // Extract form data for database
+        const formDataForDb = {
+          name: sanitizedFormData.get('name') || '',
+          email: sanitizedFormData.get('email') || '',
+          phone: sanitizedFormData.get('phone') || '',
+          'practice-area': sanitizedFormData.get('practice-area') || '',
+          message: sanitizedFormData.get('message') || '',
+          files: fileInput?.files ? Array.from(fileInput.files) : []
+        };
+
+        // Save to database (non-blocking - don't fail form if database save fails)
+        try {
+          // Import dynamically to avoid issues if database is not configured
+          const { saveContactSubmission } = await import('./database.js');
+          await saveContactSubmission(formDataForDb);
+        } catch (dbError) {
+          // Log error but don't fail the form submission
+          console.warn('Database save failed (form submission still succeeded):', dbError);
+        }
+
         // Show success message
         const successMessage = document.getElementById('form-success-message');
         if (successMessage) {

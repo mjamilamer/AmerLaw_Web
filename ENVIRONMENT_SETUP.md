@@ -63,6 +63,12 @@ VITE_SOCIAL_INSTAGRAM=https://instagram.com/amerlawllc
 VITE_EMAIL_DOMAIN=amerlawllc.com
 ```
 
+### Database (Neon/Netlify)
+```
+NETLIFY_DATABASE_URL=postgresql://user:password@host/database
+```
+**Note:** This is automatically set by Netlify when you connect your Neon database. You don't need to set this manually in your `.env` file for local development - it's only available in Netlify Functions/serverless functions.
+
 ## Security Notes
 
 - ✅ `.env` files are automatically excluded from Git (via `.gitignore`)
