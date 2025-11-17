@@ -44,7 +44,7 @@ export const FIRM = {
   },
   
   // Firm Description/Tagline
-  tagline: "Trusted Legal Representation for Your Future",
+  tagline: "Trusted Legal Representation for You",
   
   // Copyright Year
   copyrightYear: "2025",
