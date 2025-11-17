@@ -579,6 +579,23 @@
     display: grid; gap: 1.25rem;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
+  
+  /* Practice Areas - Force 4 cards in single row */
+  #practice .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  @media (max-width: 1200px) {
+    #practice .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #practice .grid {
+      grid-template-columns: 1fr;
+    }
+  }
   .card {
     background: var(--light-alt); 
     border-radius: var(--radius-lg); 
