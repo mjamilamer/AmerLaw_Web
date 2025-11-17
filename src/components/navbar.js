@@ -11,7 +11,28 @@ export function renderNavbar(navItems) {
   // Clear existing content
   navbarEl.innerHTML = '';
 
-  // Navigation links first (left side)
+  // Logo in top left
+  const logoContainer = createElement('div', {
+    className: 'navbar-logo'
+  });
+  const logoImg = createElement('img', {
+    src: '/Transparent_Logo.png',
+    alt: 'Amer Law LLC Logo',
+    className: 'logo-img'
+  });
+  logoContainer.appendChild(logoImg);
+  navbarEl.appendChild(logoContainer);
+
+  // Mobile menu button
+  const menuButton = createElement('button', {
+    className: 'menu-toggle',
+    'aria-label': 'Toggle mobile menu',
+    'aria-expanded': 'false',
+    innerHTML: '<span></span><span></span><span></span>'
+  });
+  navbarEl.appendChild(menuButton);
+
+  // Navigation links on the right
   const nav = createElement('nav', {
     role: 'navigation',
     'aria-label': 'Main navigation'
@@ -28,27 +49,6 @@ export function renderNavbar(navItems) {
 
   navLinks.forEach(link => nav.appendChild(link));
   navbarEl.appendChild(nav);
-
-  // Logo in top right
-  const logoContainer = createElement('div', {
-    className: 'navbar-logo'
-  });
-  const logoImg = createElement('img', {
-    src: '/Forma_logo.png',
-    alt: 'Amer Law LLC Logo',
-    className: 'logo-img'
-  });
-  logoContainer.appendChild(logoImg);
-  navbarEl.appendChild(logoContainer);
-
-  // Mobile menu button
-  const menuButton = createElement('button', {
-    className: 'menu-toggle',
-    'aria-label': 'Toggle mobile menu',
-    'aria-expanded': 'false',
-    innerHTML: '<span></span><span></span><span></span>'
-  });
-  navbarEl.appendChild(menuButton);
 
   // Enhanced smooth scroll for anchor links
   navLinks.forEach(link => {
@@ -106,7 +106,28 @@ export function renderNavbarForLegalPage(navItems) {
   // Clear existing content
   navbarEl.innerHTML = '';
 
-  // Navigation links first (left side)
+  // Logo in top left
+  const logoContainer = createElement('div', {
+    className: 'navbar-logo'
+  });
+  const logoImg = createElement('img', {
+    src: '../Transparent_Logo.png',
+    alt: 'Amer Law LLC Logo',
+    className: 'logo-img'
+  });
+  logoContainer.appendChild(logoImg);
+  navbarEl.appendChild(logoContainer);
+
+  // Mobile menu button
+  const menuButton = createElement('button', {
+    className: 'menu-toggle',
+    'aria-label': 'Toggle mobile menu',
+    'aria-expanded': 'false',
+    innerHTML: '<span></span><span></span><span></span>'
+  });
+  navbarEl.appendChild(menuButton);
+
+  // Navigation links on the right
   const nav = createElement('nav', {
     role: 'navigation',
     'aria-label': 'Main navigation'
@@ -127,27 +148,6 @@ export function renderNavbarForLegalPage(navItems) {
 
   navLinks.forEach(link => nav.appendChild(link));
   navbarEl.appendChild(nav);
-
-  // Logo in top right
-  const logoContainer = createElement('div', {
-    className: 'navbar-logo'
-  });
-  const logoImg = createElement('img', {
-    src: '../Forma_logo.png',
-    alt: 'Amer Law LLC Logo',
-    className: 'logo-img'
-  });
-  logoContainer.appendChild(logoImg);
-  navbarEl.appendChild(logoContainer);
-
-  // Mobile menu button
-  const menuButton = createElement('button', {
-    className: 'menu-toggle',
-    'aria-label': 'Toggle mobile menu',
-    'aria-expanded': 'false',
-    innerHTML: '<span></span><span></span><span></span>'
-  });
-  navbarEl.appendChild(menuButton);
 
   // Mobile menu toggle
   on(menuButton, 'click', () => {

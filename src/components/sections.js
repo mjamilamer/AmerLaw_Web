@@ -82,13 +82,14 @@ export function renderAbout(aboutData) {
   const aboutEl = $('#about');
   if (!aboutEl) return;
 
-  // Convert newlines to HTML line breaks
-  const formattedText = escapeHTML(aboutData.text).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+  // Convert double newlines to paragraph breaks, single newlines to line breaks
+  const paragraphs = escapeHTML(aboutData.text).split(/\n\n+/).filter(p => p.trim());
+  const formattedText = paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
 
   setHTML(aboutEl, `
     <div class="container reveal">
       <h2>${escapeHTML(aboutData.heading)}</h2>
-      <p>${formattedText}</p>
+      ${formattedText}
     </div>
   `);
 }
@@ -146,8 +147,9 @@ export function renderTeam(teamMembers) {
   };
 
   const teamCardsHTML = teamMembers.map(member => {
-    // Convert newlines to HTML line breaks for bio
-    const formattedBio = escapeHTML(member.bio).replace(/\n\n/g, '</p><p class="team-bio">').replace(/\n/g, '<br>');
+    // Convert double newlines to paragraph breaks, single newlines to line breaks
+    const bioParagraphs = escapeHTML(member.bio).split(/\n\n+/).filter(p => p.trim());
+    const formattedBio = bioParagraphs.map(p => `<p class="team-bio">${p.replace(/\n/g, '<br>')}</p>`).join('');
     
     return `
     <article class="team-card" aria-label="Team member: ${escapeHTML(member.name)}">
@@ -160,7 +162,7 @@ export function renderTeam(teamMembers) {
         <h3>${escapeHTML(member.name)}</h3>
         <p class="team-role">${escapeHTML(member.role)}</p>
         <p class="team-title">${escapeHTML(member.title)}</p>
-        <p class="team-bio">${formattedBio}</p>
+        ${formattedBio}
         <a href="mailto:${escapeHTML(member.email)}" class="team-email" aria-label="Email ${escapeHTML(member.name)}">
           ${escapeHTML(member.email)}
         </a>

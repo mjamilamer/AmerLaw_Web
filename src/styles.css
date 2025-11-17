@@ -55,10 +55,59 @@
     font-family: var(--font-sans);
     color: var(--dark);
     background: var(--light);
-    line-height: 1.6;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-size: 1rem;
+  }
+  
+  /* Base Typography */
+  p {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--dark);
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  
+  p:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Optimized paragraph spacing for readability */
+  p + p {
+    margin-top: 0;
+  }
+  
+  /* Consistent Heading Styles */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--primary);
+  }
+  
+  h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+  
+  h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+  }
+  
+  h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+  
+  h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   }
   img {
     max-width: 100%;
@@ -77,6 +126,7 @@
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-base);
     border-bottom: 1px solid rgba(255,255,255,0.05);
+    gap: 2rem;
   }
   #navbar.scrolled {
     box-shadow: var(--shadow-lg);
@@ -86,7 +136,7 @@
   .navbar-logo {
     display: flex; 
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -94,13 +144,13 @@
     cursor: default;
     padding: 0.25rem 0;
     pointer-events: none;
-    order: 3; /* Position on the right */
+    order: 1; /* Position on the left */
+    flex-shrink: 0;
   }
   .logo-img {
     height: 50px;
     width: auto;
     object-fit: contain;
-    filter: brightness(0) invert(1); /* Make logo white for dark navbar */
     transition: all var(--transition-base);
     opacity: 0.95;
   }
@@ -155,9 +205,11 @@
   #navbar nav {
     display: flex; 
     align-items: center; 
-    gap: 0.5rem;
-    order: 1; /* Position on the left */
-    flex: 1; /* Take available space */
+    gap: 0.25rem;
+    order: 3; /* Position on the right */
+    justify-content: flex-end;
+    flex-shrink: 0;
+    margin-left: auto;
   }
   #navbar nav a {
     color: #fff; text-decoration: none; font-weight: 500;
@@ -166,6 +218,7 @@
     position: relative;
     font-size: 0.95rem;
     letter-spacing: 0.3px;
+    white-space: nowrap;
   }
   #navbar nav a::before {
     content: '';
@@ -205,7 +258,8 @@
     cursor: pointer;
     padding: 0.5rem; 
     z-index: 1001;
-    order: 2; /* Position between nav and logo on mobile */
+    order: 2; /* Position between logo and nav on mobile */
+    flex-shrink: 0;
   }
   .menu-toggle span {
     width: 25px; height: 3px; background: #fff;
@@ -225,14 +279,17 @@
     #navbar {
       flex-wrap: wrap; 
       justify-content: space-between;
+      gap: 1rem;
     }
     #navbar nav {
       display: none; 
       width: 100%; 
       flex-direction: column;
       margin-top: 1rem; 
+      margin-left: 0;
       gap: 0.5rem;
       order: 3;
+      justify-content: flex-start;
     }
     #navbar.menu-open nav {
       display: flex;
@@ -447,14 +504,17 @@
     padding: clamp(2rem, 5vw, 3rem) 1.25rem;
   }
   section h2 {
-    text-align: center; font-family: var(--font-serif);
-    color: var(--primary); margin-bottom: 1rem; 
+    text-align: center; 
+    font-family: var(--font-serif);
+    color: var(--primary); 
+    margin-bottom: 1rem; 
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 700;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.02em;
     position: relative;
     display: inline-block;
     width: 100%;
+    line-height: 1.2;
   }
   section h2::after {
     content: '';
@@ -465,6 +525,44 @@
     margin: 1rem auto 0;
     border-radius: 2px;
   }
+  
+  /* About Section Typography */
+  #about {
+    background: var(--light-alt);
+  }
+  #about .container {
+    max-width: 900px;
+  }
+  #about p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-align: left;
+  }
+  #about p:last-of-type {
+    margin-bottom: 0;
+  }
+  
+  /* Why Solo Section */
+  #why-solo {
+    background: var(--light);
+  }
+  #why-solo .container {
+    max-width: 900px;
+  }
+  #why-solo p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--dark);
+    margin-bottom: 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-align: left;
+  }
+  
   .container { 
     max-width: 1200px; 
     margin: 0 auto;
@@ -508,6 +606,15 @@
     color: var(--primary);
     font-size: 1.4rem;
     font-weight: 600;
+    font-family: var(--font-serif);
+  }
+  .card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--dark);
+    margin-bottom: 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
   
   /* TEAM SECTION */
@@ -516,8 +623,13 @@
   }
   .team-intro {
     text-align: center; margin-bottom: 3rem;
-    color: var(--dark); opacity: 0.8;
+    color: var(--dark); 
+    opacity: 0.85;
     max-width: 700px; margin-left: auto; margin-right: auto;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
   .team-grid {
     display: grid; gap: 2rem;
@@ -582,8 +694,17 @@
     opacity: 0.8; font-style: italic;
   }
   .team-bio {
-    color: var(--dark); font-size: 0.95rem; line-height: 1.6;
-    margin-bottom: 1rem; opacity: 0.85;
+    color: var(--dark); 
+    font-size: 1rem; 
+    line-height: 1.8;
+    margin-bottom: 1.25rem; 
+    opacity: 0.9;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-align: left;
+  }
+  .team-bio:last-of-type {
+    margin-bottom: 1rem;
   }
   .team-email {
     color: var(--primary); text-decoration: none; font-size: 0.9rem;
@@ -796,11 +917,16 @@
   }
   .contact-info {
     font-size: 0.95rem;
+    font-family: var(--font-sans);
   }
   .contact-info h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
     color: var(--primary);
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
   .business-card-wrapper {
     margin-bottom: 1.5rem;
@@ -820,17 +946,26 @@
     box-shadow: var(--shadow-lg);
   }
   address {
-    font-style: normal; margin-bottom: 1rem;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-style: normal; 
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
   address p {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
   }
   address a {
-    color: var(--primary); text-decoration: none;
+    color: var(--primary); 
+    text-decoration: none;
     transition: color 0.2s ease;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
   address a:hover {
     color: var(--accent); text-decoration: underline;
@@ -999,9 +1134,14 @@
     font-size: 1.2rem; margin-bottom: 1rem;
   }
   .testimonial-text {
-    font-style: italic; line-height: 1.8;
-    margin-bottom: 1.5rem; color: var(--dark);
+    font-style: italic; 
+    line-height: 1.75;
+    margin-bottom: 1.5rem; 
+    color: var(--dark);
     font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-family: var(--font-sans);
   }
   .testimonial-author {
     display: flex; flex-direction: column; gap: 0.25rem;
@@ -1101,8 +1241,17 @@
     max-height: 500px; padding: 0 1.5rem 1.5rem;
   }
   .faq-answer p {
-    color: var(--dark); line-height: 1.7;
+    color: var(--dark); 
+    line-height: 1.75;
     opacity: 0.9;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-family: var(--font-sans);
+    margin-bottom: 1rem;
+  }
+  .faq-answer p:last-child {
+    margin-bottom: 0;
   }
   
   /* Newsletter */
@@ -1135,9 +1284,13 @@
     font-size: clamp(1.5rem, 3.5vw, 2rem);
   }
   .newsletter-box p {
-    margin-bottom: 1.25rem; opacity: 0.95;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    margin-bottom: 1.25rem; 
+    opacity: 0.95;
+    font-size: 1rem;
+    line-height: 1.75;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-family: var(--font-sans);
   }
   .newsletter-form {
     display: flex; flex-direction: column; gap: 0.875rem;
@@ -1209,9 +1362,13 @@
     font-weight: 600;
   }
   .footer-section p {
-    margin-bottom: 0.75rem; opacity: 0.9;
-    line-height: 1.6;
+    margin-bottom: 0.75rem; 
+    opacity: 0.9;
+    line-height: 1.75;
     font-size: 0.9rem;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
   .footer-section nav {
     display: flex; flex-direction: column; gap: 0.625rem;
@@ -1353,6 +1510,12 @@
   }
   .legal-text-content p {
     margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.75;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-family: var(--font-sans);
+    color: var(--dark);
   }
   .legal-text-content ul {
     margin-left: 2rem; margin-bottom: 1.5rem;
