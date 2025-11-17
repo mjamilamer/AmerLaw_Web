@@ -507,7 +507,7 @@ export function renderFooter(footerData, socialLinks) {
       <div class="container">
         <div class="footer-grid">
           <div class="footer-section">
-            <h3>${escapeHTML(FIRM.name)}</h3>
+            <h3>${escapeHTML(FIRM.name.toUpperCase())}</h3>
             <p>Trusted legal representation for over 50 years. Protecting your rights and delivering results.</p>
             <div class="social-links">
               ${socialHTML}

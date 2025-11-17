@@ -148,22 +148,26 @@
     flex-shrink: 0;
   }
   .logo-img {
-    height: 50px;
+    height: 65px;
     width: auto;
+    min-width: 120px;
     object-fit: contain;
     transition: all var(--transition-base);
-    opacity: 0.95;
+    opacity: 1;
+    filter: brightness(0) invert(1); /* Make logo white for dark navbar */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
   #navbar.scrolled .logo-img {
-    height: 40px;
+    height: 50px;
     opacity: 1;
   }
   @media (max-width: 768px) {
     .logo-img {
-      height: 40px;
+      height: 50px;
     }
     #navbar.scrolled .logo-img {
-      height: 35px;
+      height: 45px;
     }
   }
   
@@ -375,11 +379,11 @@
     font-family: var(--font-serif); 
     font-size: clamp(1.75rem, 4.5vw, 3rem); 
     margin-bottom: 0.2rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.02em;
     line-height: 1.2;
     text-shadow: 0 2px 20px rgba(0,0,0,0.4);
-    text-transform: none; /* Clean text format like business card */
+    text-transform: uppercase; /* Uppercase like business card */
     font-style: normal;
     color: #fff;
   }
@@ -387,9 +391,9 @@
     font-family: var(--font-sans);
     font-size: clamp(0.75rem, 1.2vw, 0.9rem);
     font-weight: 400;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em; /* Wider letter spacing like business card */
     text-transform: uppercase;
-    opacity: 0.85;
+    opacity: 0.9;
     margin-top: 0;
     margin-bottom: 0;
     text-shadow: 0 1px 10px rgba(0,0,0,0.3);
@@ -515,6 +519,7 @@
     display: inline-block;
     width: 100%;
     line-height: 1.2;
+    text-transform: uppercase; /* Uppercase like business card */
   }
   section h2::after {
     content: '';
@@ -1360,12 +1365,14 @@
     margin-bottom: 1rem;
     font-size: 1.1rem;
     font-weight: 600;
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
   }
   .footer-section p {
     margin-bottom: 0.75rem; 
-    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.95); /* Brighter white for better contrast */
     line-height: 1.75;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-family: var(--font-sans);
     font-weight: 400;
     letter-spacing: 0.01em;
@@ -1374,14 +1381,16 @@
     display: flex; flex-direction: column; gap: 0.625rem;
   }
   .footer-section nav a {
-    color: #fff; text-decoration: none;
+    color: rgba(255, 255, 255, 0.95); /* Brighter white for better contrast */
+    text-decoration: none;
     transition: all var(--transition-base);
-    opacity: 0.9;
+    opacity: 1;
     padding: 0.25rem 0;
     position: relative;
     display: inline-block;
     width: fit-content;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 400;
   }
   .footer-section nav a::before {
     content: '';
@@ -1403,11 +1412,21 @@
   }
   .footer-section address {
     font-style: normal;
+    color: rgba(255, 255, 255, 0.95); /* Brighter white for better contrast */
+    font-size: 0.95rem;
+    line-height: 1.75;
+    font-family: var(--font-sans);
+  }
+  .footer-section address p {
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 0.5rem;
   }
   .footer-section address a {
-    color: #fff; text-decoration: none;
+    color: rgba(255, 255, 255, 0.95); /* Brighter white for better contrast */
+    text-decoration: none;
     transition: all var(--transition-base);
     display: inline-block;
+    font-weight: 400;
   }
   .footer-section address a:hover {
     color: var(--accent-light);
