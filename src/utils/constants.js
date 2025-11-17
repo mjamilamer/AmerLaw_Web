@@ -8,6 +8,9 @@ export const FIRM = {
   // Firm Name
   name: "Amer Law LLC",
   nameFull: "AMER LAW LLC ATTORNEYS AT LAW",
+  // Display name for hero section (matches business card style)
+  nameDisplay: "Amer Law LLC",
+  nameSubtitle: "Attorney at Law",
   
   // Contact Information
   contact: {

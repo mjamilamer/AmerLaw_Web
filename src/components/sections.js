@@ -39,8 +39,11 @@ export function renderHero(heroData) {
       <img src="/Forma_logo.png" alt="Amer Law LLC Logo Watermark" />
     </div>
     <div class="overlay reveal" role="banner">
-      <h1>${escapeHTML(heroData.title)}</h1>
-      <p>${escapeHTML(heroData.subtitle)}</p>
+      <div class="hero-title-group">
+        <h1>${escapeHTML(heroData.title)}</h1>
+        ${heroData.titleSubtext ? `<p class="hero-subtitle-text">${escapeHTML(heroData.titleSubtext)}</p>` : ''}
+      </div>
+      <p class="hero-tagline">${escapeHTML(heroData.subtitle)}</p>
       <div class="hero-cta-group">
         <a href="#contact" class="btn btn-primary" aria-label="${escapeHTML(heroData.cta)}">${escapeHTML(heroData.cta)}</a>
       </div>

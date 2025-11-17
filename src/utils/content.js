@@ -10,9 +10,10 @@ export const siteContent = {
       { label: "Contact", target: "contact" }
     ],
     hero: {
-      title: FIRM.nameFull,
+      title: FIRM.nameDisplay,
+      titleSubtext: FIRM.nameSubtitle,
       subtitle: FIRM.tagline,
-      cta: "Free Consultation"
+      cta: "Request a Consultation"
     },
     stats: [
       { number: "15+", label: "Years of Experience", icon: "⚖️" },
