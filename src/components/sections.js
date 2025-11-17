@@ -200,7 +200,12 @@ export function renderContact(contactData) {
     <div class="container contact-split reveal">
       <div>
         <h2>Contact Us</h2>
-        <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field" novalidate aria-label="Contact form" id="contact-form">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <button type="button" class="btn contact-form-toggle" id="contact-form-toggle" aria-expanded="false" aria-controls="contact-form">
+            Send a Message
+          </button>
+        </div>
+        <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field" novalidate aria-label="Contact form" id="contact-form" class="contact-form-collapsed">
           <input type="hidden" name="form-name" value="contact" />
           <p style="display: none;">
             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -307,7 +312,6 @@ export function renderContact(contactData) {
           <img src="/Business_card.png" alt="Amer Law LLC Business Card" class="business-card-img" />
         </div>
         <address>
-          <p>${escapeHTML(contactData.address)}</p>
           <p>
             <a href="tel:${contactData.phone.replace(/\s/g, '')}" aria-label="Call us">
               📞 ${escapeHTML(contactData.phone)}
@@ -318,14 +322,24 @@ export function renderContact(contactData) {
               ✉️ ${escapeHTML(contactData.email)}
             </a>
           </p>
+          <!-- Address - Commented out for future use -->
+          <!--
+          <p>${escapeHTML(contactData.address)}</p>
+          -->
+          <!-- Office Hours - Commented out for future use -->
+          <!--
           ${contactData.hours ? `<div class="office-hours"><strong>Office Hours:</strong><br>${contactData.hours}</div>` : ''}
+          -->
         </address>
+        <!-- Google Map - Commented out for future use -->
+        <!--
         <iframe 
           src="https://maps.google.com/maps?q=${encodeURIComponent(contactData.address)}&output=embed"
           title="Office location map"
           loading="lazy"
           aria-label="Map showing office location at ${escapeHTML(contactData.address)}"
         ></iframe>
+        -->
       </div>
     </div>
   `);

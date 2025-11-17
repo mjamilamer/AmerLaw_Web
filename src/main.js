@@ -53,6 +53,9 @@ function init() {
       initFileUpload(contactForm);
     }
 
+    // Initialize contact form toggle
+    initContactFormToggle();
+
     // Initialize FAQ accordion
     initFAQ();
 
@@ -117,6 +120,89 @@ function initHeroRotation() {
       heroEl.classList.remove('hero-dark');
     }
   }, 8000);
+}
+
+/**
+ * Expand contact form programmatically
+ */
+function expandContactForm() {
+  const toggleButton = $('#contact-form-toggle');
+  const contactForm = $('#contact-form');
+  const contactSection = $('#contact');
+  
+  if (!toggleButton || !contactForm) return;
+  
+  // Check if already expanded
+  const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+  if (isExpanded) return;
+  
+  // Expand form
+  contactForm.classList.remove('contact-form-collapsed');
+  contactForm.classList.add('contact-form-expanded');
+  toggleButton.setAttribute('aria-expanded', 'true');
+  toggleButton.textContent = 'Hide Form';
+  
+  // Scroll to contact section smoothly
+  if (contactSection) {
+    setTimeout(() => {
+      const navbarHeight = $('#navbar')?.offsetHeight || 0;
+      const sectionPosition = contactSection.offsetTop - navbarHeight - 20;
+      window.scrollTo({
+        top: sectionPosition,
+        behavior: 'smooth'
+      });
+    }, 100);
+  }
+}
+
+/**
+ * Initialize contact form toggle functionality
+ */
+function initContactFormToggle() {
+  const toggleButton = $('#contact-form-toggle');
+  const contactForm = $('#contact-form');
+  
+  if (!toggleButton || !contactForm) return;
+
+  toggleButton.addEventListener('click', () => {
+    const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+    
+    if (isExpanded) {
+      // Collapse form
+      contactForm.classList.remove('contact-form-expanded');
+      contactForm.classList.add('contact-form-collapsed');
+      toggleButton.setAttribute('aria-expanded', 'false');
+      toggleButton.textContent = 'Send a Message';
+    } else {
+      // Expand form
+      expandContactForm();
+    }
+  });
+  
+  // Handle "Request a Consultation" button clicks
+  const consultationButtons = document.querySelectorAll('a[href="#contact"]');
+  consultationButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      expandContactForm();
+    });
+  });
+  
+  // Auto-open form if URL hash is #contact
+  if (window.location.hash === '#contact') {
+    setTimeout(() => {
+      expandContactForm();
+    }, 500); // Small delay to ensure DOM is ready
+  }
+  
+  // Handle hash changes (e.g., browser back/forward or direct navigation)
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#contact') {
+      setTimeout(() => {
+        expandContactForm();
+      }, 100);
+    }
+  });
 }
 
 // Initialize when DOM is ready

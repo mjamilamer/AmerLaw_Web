@@ -8,7 +8,8 @@
     --dark: #1b263b;
     --dark-alt: #2d3e52;
     --font-sans: 'Inter', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-    --font-serif: 'Playfair Display', serif;
+    --font-serif: 'Playfair Display', 'Times New Roman', Times, serif;
+    --font-body: 'Playfair Display', 'Times New Roman', Times, serif; /* Formal serif for body text */
     
     /* Modern shadows */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
@@ -52,7 +53,7 @@
     scroll-padding-top: 100px; /* Account for fixed navbar */
   }
   body {
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     color: var(--dark);
     background: var(--light);
     line-height: 1.7;
@@ -64,7 +65,7 @@
   
   /* Base Typography */
   p {
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1.75;
     color: var(--dark);
@@ -118,7 +119,7 @@
   /* NAVBAR */
   #navbar {
     position: fixed; top: 0; left: 0; width: 100%;
-    z-index: 1000; padding: 1rem 2rem;
+    z-index: 1000; padding: 1rem 1.5rem 1rem 1rem; /* Less left padding for larger logo */
     display: flex; justify-content: space-between; align-items: center;
     background: rgba(13,27,42,0.98);
     backdrop-filter: blur(12px);
@@ -131,7 +132,7 @@
   #navbar.scrolled {
     box-shadow: var(--shadow-lg);
     background: rgba(13,27,42,0.99);
-    padding: 0.75rem 2rem;
+    padding: 0.75rem 1.5rem 0.75rem 1rem; /* Less left padding for larger logo */
   }
   .navbar-logo {
     display: flex; 
@@ -146,11 +147,12 @@
     pointer-events: none;
     order: 1; /* Position on the left */
     flex-shrink: 0;
+    margin-left: -0.5rem; /* Move logo more to the left */
   }
   .logo-img {
-    height: 65px;
+    height: 100px;
     width: auto;
-    min-width: 120px;
+    min-width: 180px;
     object-fit: contain;
     transition: all var(--transition-base);
     opacity: 1;
@@ -159,15 +161,18 @@
     image-rendering: crisp-edges;
   }
   #navbar.scrolled .logo-img {
-    height: 50px;
+    height: 80px;
+    min-width: 160px;
     opacity: 1;
   }
   @media (max-width: 768px) {
     .logo-img {
-      height: 50px;
+      height: 70px;
+      min-width: 150px;
     }
     #navbar.scrolled .logo-img {
-      height: 45px;
+      height: 65px;
+      min-width: 140px;
     }
   }
   
@@ -324,10 +329,14 @@
   .hero-bg {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, rgba(13,27,42,0.85) 0%, rgba(27,38,59,0.75) 100%),
-                center/cover fixed no-repeat;
+    background: linear-gradient(135deg, rgba(13,27,42,0.85) 0%, rgba(27,38,59,0.75) 100%);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll; /* Changed from fixed to prevent tiling */
     z-index: 0;
     transition: opacity 2s ease-in-out;
+    will-change: opacity;
   }
   .hero-bg-light {
     background-image: url('/hero_light.png');
@@ -336,6 +345,37 @@
   .hero-bg-dark {
     background-image: url('/hero_dark.png');
     opacity: 0;
+  }
+  
+  /* Ensure hero background scales properly at all resolutions without tiling */
+  @media (min-width: 1920px) {
+    .hero-bg {
+      background-size: cover;
+      background-position: left center;
+      min-height: 100vh;
+    }
+  }
+  @media (min-width: 2560px) {
+    .hero-bg {
+      background-size: cover;
+      background-position: left center;
+      min-height: 100vh;
+    }
+  }
+  @media (min-width: 3840px) {
+    .hero-bg {
+      background-size: cover;
+      background-position: left center;
+      min-height: 100vh;
+    }
+  }
+  
+  /* Prevent background tiling on very wide screens */
+  @media (min-aspect-ratio: 21/9) {
+    .hero-bg {
+      background-size: cover;
+      background-position: left center;
+    }
   }
   #hero.hero-dark .hero-bg-light {
     opacity: 0;
@@ -391,6 +431,7 @@
     font-family: var(--font-sans);
     font-size: clamp(0.75rem, 1.2vw, 0.9rem);
     font-weight: 400;
+    font-style: italic; /* Italicized as requested */
     letter-spacing: 0.15em; /* Wider letter spacing like business card */
     text-transform: uppercase;
     opacity: 0.9;
@@ -435,11 +476,16 @@
     }
   }
   .btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    margin-top: 0.5rem; padding: 0.875rem 2rem;
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    margin-top: 0.5rem; 
+    padding: 0.875rem 2rem;
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-    color: #fff; border-radius: var(--radius-sm);
-    text-decoration: none; font-weight: 600; 
+    color: #fff; 
+    border-radius: var(--radius-sm);
+    text-decoration: none; 
+    font-weight: 600; 
     transition: all var(--transition-base);
     box-shadow: 0 6px 20px rgba(166,124,82,0.3);
     border: none;
@@ -448,6 +494,9 @@
     letter-spacing: 0.3px;
     position: relative;
     overflow: hidden;
+    white-space: nowrap; /* Prevent text wrapping that could change button size */
+    min-width: 180px; /* Consistent width for all buttons */
+    box-sizing: border-box;
   }
   .btn::before {
     content: '';
@@ -539,6 +588,7 @@
     max-width: 900px;
   }
   #about p {
+    font-family: var(--font-body);
     font-size: 1.05rem;
     line-height: 1.8;
     color: var(--dark);
@@ -559,6 +609,7 @@
     max-width: 900px;
   }
   #why-solo p {
+    font-family: var(--font-body);
     font-size: 1.05rem;
     line-height: 1.8;
     color: var(--dark);
@@ -631,6 +682,7 @@
     font-family: var(--font-serif);
   }
   .card p {
+    font-family: var(--font-body);
     font-size: 0.95rem;
     line-height: 1.7;
     color: var(--dark);
@@ -644,6 +696,7 @@
     background: #fff;
   }
   .team-intro {
+    font-family: var(--font-body);
     text-align: center; margin-bottom: 3rem;
     color: var(--dark); 
     opacity: 0.85;
@@ -716,6 +769,7 @@
     opacity: 0.8; font-style: italic;
   }
   .team-bio {
+    font-family: var(--font-body);
     color: var(--dark); 
     font-size: 1rem; 
     line-height: 1.8;
@@ -743,10 +797,30 @@
     font-size: clamp(1.75rem, 3.5vw, 2.25rem);
     margin-bottom: 1.5rem;
   }
+  .contact-form-toggle {
+    margin: 0 auto 1.5rem auto;
+    margin-top: 0.5rem; /* Match the base .btn margin-top */
+  }
+  .contact-form-collapsed {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .contact-form-expanded {
+    max-height: 5000px;
+    opacity: 1;
+    transition: max-height 0.5s ease-in, opacity 0.4s ease-in, margin 0.3s ease-in;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+  }
   .contact-split {
-    display: grid; gap: 1.5rem; grid-template-columns: 1.1fr 0.9fr;
+    display: grid; gap: 2rem; grid-template-columns: 1.1fr 0.9fr;
     max-width: 1000px;
     margin: 0 auto;
+    align-items: start;
   }
   form { display: grid; gap: 0.75rem; }
   .form-group {
@@ -939,11 +1013,13 @@
   }
   .contact-info {
     font-size: 0.95rem;
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
   }
   .contact-info h3 {
     font-size: 1.3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     color: var(--primary);
     font-family: var(--font-serif);
     font-weight: 600;
@@ -967,30 +1043,35 @@
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
   }
-  address {
+  .contact-info address {
     font-style: normal; 
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    line-height: 1.75;
-    font-family: var(--font-sans);
+    margin-bottom: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-family: var(--font-body);
     font-weight: 400;
     letter-spacing: 0.01em;
   }
-  address p {
+  .contact-info address p {
     margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-    line-height: 1.75;
+    font-size: 1rem;
+    line-height: 1.6;
   }
-  address a {
+  .contact-info address p:last-child {
+    margin-bottom: 0;
+  }
+  .contact-info address a {
     color: var(--primary); 
     text-decoration: none;
     transition: color 0.2s ease;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.01em;
+    font-family: var(--font-body);
   }
-  address a:hover {
-    color: var(--accent); text-decoration: underline;
+  .contact-info address a:hover {
+    color: var(--accent); 
+    text-decoration: underline;
   }
   .contact-info iframe { 
     width: 100%; 
@@ -1003,6 +1084,9 @@
     .contact-split { 
       grid-template-columns: 1fr; 
       gap: 1.25rem;
+    }
+    .contact-form-toggle {
+      max-width: 100%;
     }
     .contact-info iframe {
       height: 200px;
@@ -1156,6 +1240,7 @@
     font-size: 1.2rem; margin-bottom: 1rem;
   }
   .testimonial-text {
+    font-family: var(--font-body);
     font-style: italic; 
     line-height: 1.75;
     margin-bottom: 1.5rem; 
@@ -1163,7 +1248,6 @@
     font-size: 1.05rem;
     font-weight: 400;
     letter-spacing: 0.01em;
-    font-family: var(--font-sans);
   }
   .testimonial-author {
     display: flex; flex-direction: column; gap: 0.25rem;
@@ -1263,13 +1347,13 @@
     max-height: 500px; padding: 0 1.5rem 1.5rem;
   }
   .faq-answer p {
+    font-family: var(--font-body);
     color: var(--dark); 
     line-height: 1.75;
     opacity: 0.9;
     font-size: 0.95rem;
     font-weight: 400;
     letter-spacing: 0.01em;
-    font-family: var(--font-sans);
     margin-bottom: 1rem;
   }
   .faq-answer p:last-child {
@@ -1306,13 +1390,13 @@
     font-size: clamp(1.5rem, 3.5vw, 2rem);
   }
   .newsletter-box p {
+    font-family: var(--font-body);
     margin-bottom: 1.25rem; 
     opacity: 0.95;
     font-size: 1rem;
     line-height: 1.75;
     font-weight: 400;
     letter-spacing: 0.01em;
-    font-family: var(--font-sans);
   }
   .newsletter-form {
     display: flex; flex-direction: column; gap: 0.875rem;
@@ -1545,12 +1629,12 @@
     font-size: 1.8rem; margin-bottom: 1rem;
   }
   .legal-text-content p {
+    font-family: var(--font-body);
     margin-bottom: 1.5rem;
     font-size: 1rem;
     line-height: 1.75;
     font-weight: 400;
     letter-spacing: 0.01em;
-    font-family: var(--font-sans);
     color: var(--dark);
   }
   .legal-text-content ul {
