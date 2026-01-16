@@ -1,8 +1,17 @@
+############################################
+# Build configuration
+############################################
 [build]
   base = "."
   command = "npm run build"
   publish = "dist"
 
+
+############################################
+# Redirects (path-only, safe)
+############################################
+
+# Enforce trailing slashes for legal pages
 [[redirects]]
   from = "/privacy-policy"
   to = "/privacy-policy/"
@@ -18,31 +27,58 @@
   to = "/disclaimer/"
   status = 301
 
+
+############################################
+# Security headers (FREE tier safe)
+############################################
+
+# Default headers for all responses
 [[headers]]
   for = "/*"
   [headers.values]
-  Strict-Transport-Security = "max-age=86400"
-  X-Content-Type-Options = "nosniff"
-  X-Frame-Options = "SAMEORIGIN"
-  Referrer-Policy = "strict-origin-when-cross-origin"
-  Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    # Prevent MIME sniffing
+    X-Content-Type-Options = "nosniff"
 
-# Netlify Forms configuration
-# Email notifications need to be configured in Netlify Dashboard:
-# Site settings > Forms > Form notifications > Add notification
-# Set recipient email to: WAELAMER@AMERLAWLLC.COM or mjamilamer@gmail.com
+    # Prevent clickjacking
+    X-Frame-Options = "SAMEORIGIN"
+
+    # Limit referrer leakage
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Disable unused browser capabilities
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+    # Conservative HSTS (safe during early production)
+    # Increase later once site is fully stable
+    Strict-Transport-Security = "max-age=86400"
+
+
+############################################
+# Performance: long-term caching for assets
+############################################
+
+# Cache immutable build assets aggressively
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+
+############################################
+# Netlify Forms (no config needed here)
+############################################
+# - Honeypot handled in HTML
+# - Email notifications configured in Netlify Dashboard
 #
-# Custom Email Subject Line:
-# In the notification settings, you can use form field placeholders in the subject:
-# - {{name}} - Submitter's name
-# - {{email}} - Submitter's email
-# - {{practice-area}} - Selected practice area
-# - {{phone}} - Phone number
+# Suggested recipients:
+#   WAELAMER@AMERLAWLLC.COM
+#   mjamilamer@gmail.com
 #
-# Example subject templates:
-# - "New Contact: {{name}} - {{practice-area}}"
-# - "Contact Form: {{name}} ({{email}})"
-# - "{{practice-area}} Inquiry from {{name}}"
+# Suggested subject templates:
+#   "New Contact: {{name}} - {{practice-area}}"
+#   "Contact Form: {{name}} ({{email}})"
+#   "{{practice-area}} Inquiry from {{name}}"
 #
-# Or use the simple subject: "New Contact Form Submission from Amer Law Website"
-# (Configured in src/utils/constants.js - FIRM.email.contactFormSubject)
+# Fallback subject:
+#   "New Contact Form Submission from Amer Law Website"
+############################################
