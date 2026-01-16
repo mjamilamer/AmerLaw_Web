@@ -101,12 +101,6 @@ export const siteContent = {
         pdfUrl: "/assets/documents/terms-of-service.pdf"
       },
       {
-        id: "accessibility",
-        title: "Accessibility Statement",
-        description: "Our commitment to making our website accessible to all users.",
-        pdfUrl: "/assets/documents/accessibility-statement.pdf"
-      },
-      {
         id: "disclaimer",
         title: "Disclaimer",
         description: "Important legal disclaimers regarding our services and website content.",
@@ -118,7 +112,6 @@ export const siteContent = {
       links: [
         { label: "Privacy Policy", href: "/privacy-policy/" },
         { label: "Terms of Service", href: "/terms-of-service/" },
-        { label: "Accessibility Statement", href: "/accessibility-statement/" },
         { label: "Disclaimer", href: "/disclaimer/" }
       ]
     }

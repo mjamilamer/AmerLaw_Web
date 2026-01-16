@@ -40,7 +40,7 @@ function init() {
     renderFAQ(siteContent.faq);
     renderContact(siteContent.contact);
     renderNewsletter();
-    renderFooter(siteContent.footer, siteContent.social);
+    renderFooter(siteContent.footer);
 
     // Initialize form validation
     const contactForm = $('form[name="contact"]');

@@ -17,7 +17,7 @@ export function initLegalPage() {
     renderNavbarForLegalPage(siteContent.nav);
 
     // Render footer
-    renderFooter(siteContent.footer, siteContent.social);
+    renderFooter(siteContent.footer);
 
     // Update meta tags and firm name references
     initLegalPageMeta();

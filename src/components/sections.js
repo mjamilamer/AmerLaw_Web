@@ -369,6 +369,11 @@ export function renderContact(contactData) {
             </p>
             <span id="documents-error" class="error-message" role="alert" aria-live="polite"></span>
           </div>
+          <div class="form-disclaimer" style="margin: 1.5rem 0; padding: 1rem; background-color: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--accent); border-radius: 4px;">
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">
+              <strong style="color: var(--accent-light);">Important Notice:</strong> Submitting this form or uploading documents does not create an attorney-client relationship between you and Amer Law LLC. No legal services are retained by submitting this form. A separate representation agreement must be executed between the parties to establish an attorney-client relationship and retain our services.
+            </p>
+          </div>
           <button type="submit" class="btn">Send Message</button>
         </form>
       </div>
@@ -557,26 +562,12 @@ export function renderEmergencyBanner(contactData) {
 /**
  * Render footer with enhanced content
  */
-export function renderFooter(footerData, socialLinks) {
+export function renderFooter(footerData) {
   const footerEl = $('#footer');
   if (!footerEl) return;
 
   const linksHTML = footerData.links.map(link => {
     return `<a href="${escapeHTML(link.href)}">${escapeHTML(link.label)}</a>`;
-  }).join('');
-
-  const socialHTML = Object.entries(socialLinks).map(([platform, url]) => {
-    const icons = {
-      facebook: '📘',
-      twitter: '🐦',
-      linkedin: '💼',
-      instagram: '📷'
-    };
-    return `
-      <a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer" aria-label="Follow us on ${platform}">
-        ${icons[platform] || '🔗'}
-      </a>
-    `;
   }).join('');
 
   // Format phone number for tel: link (remove non-digits)
@@ -589,9 +580,6 @@ export function renderFooter(footerData, socialLinks) {
           <div class="footer-section">
             <h3>${escapeHTML(FIRM.name.toUpperCase())}</h3>
             <p>Protecting your rights and delivering results.</p>
-            <div class="social-links">
-              ${socialHTML}
-            </div>
           </div>
           <div class="footer-section footer-section-center">
             <h4>Quick Links</h4>

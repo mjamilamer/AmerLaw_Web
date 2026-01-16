@@ -14,11 +14,6 @@
   status = 301
 
 [[redirects]]
-  from = "/accessibility-statement"
-  to = "/accessibility-statement/"
-  status = 301
-
-[[redirects]]
   from = "/disclaimer"
   to = "/disclaimer/"
   status = 301
