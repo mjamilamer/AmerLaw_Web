@@ -53,9 +53,11 @@ export function initLegalPageMeta() {
   // Update email addresses in contact sections
   const emailLinks = document.querySelectorAll('address a[href^="mailto:"]');
   emailLinks.forEach(link => {
-    // Update if email domain matches the old domain pattern or is in address section
-    const oldDomain = 'smithlaw.com';
-    if (link.href.includes(`@${oldDomain}`) || link.closest('address')) {
+    // Update if email domain matches old domain patterns or is in address section
+    const oldDomains = ['smithlaw.com', 'info@smithlaw.com'];
+    const needsUpdate = oldDomains.some(domain => link.href.includes(domain)) || 
+                       (link.closest('address') && !link.href.includes(FIRM.contact.email.toLowerCase()));
+    if (needsUpdate) {
       link.href = `mailto:${FIRM.contact.email}`;
       link.textContent = FIRM.contact.email;
     }

@@ -18,7 +18,7 @@ export const FIRM = {
     phone: import.meta.env.VITE_CONTACT_PHONE || "973-356-6222",
     emergency: import.meta.env.VITE_CONTACT_EMERGENCY || import.meta.env.VITE_CONTACT_PHONE || "973-356-6222",
     email: import.meta.env.VITE_CONTACT_EMAIL || "WAELAMER@AMERLAWLLC.COM",
-    address: import.meta.env.VITE_CONTACT_ADDRESS || "123 Main Street, Newark, NJ 07102",
+    address: import.meta.env.VITE_CONTACT_ADDRESS || "1536 State Route 23, #1020, Wayne, NJ 07470",
     hours: import.meta.env.VITE_CONTACT_HOURS || "Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM<br>Sunday: Closed"
   },
   
@@ -38,12 +38,12 @@ export const FIRM = {
   // Location Information
   // Can be overridden via environment variables (VITE_LOCATION_*)
   location: {
-    city: import.meta.env.VITE_LOCATION_CITY || "Newark",
+    city: import.meta.env.VITE_LOCATION_CITY || "Wayne",
     state: import.meta.env.VITE_LOCATION_STATE || "New Jersey",
     stateAbbr: import.meta.env.VITE_LOCATION_STATE_ABBR || "NJ",
-    zipCode: import.meta.env.VITE_LOCATION_ZIP || "07102",
-    street: import.meta.env.VITE_LOCATION_STREET || "123 Main Street",
-    fullAddress: import.meta.env.VITE_LOCATION_FULL_ADDRESS || import.meta.env.VITE_CONTACT_ADDRESS || "123 Main Street, Newark, NJ 07102"
+    zipCode: import.meta.env.VITE_LOCATION_ZIP || "07470",
+    street: import.meta.env.VITE_LOCATION_STREET || "1536 State Route 23, #1020",
+    fullAddress: import.meta.env.VITE_LOCATION_FULL_ADDRESS || import.meta.env.VITE_CONTACT_ADDRESS || "1536 State Route 23, #1020, Wayne, NJ 07470"
   },
   
   // Firm Description/Tagline

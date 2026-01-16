@@ -5,7 +5,6 @@ export const siteContent = {
       { label: "Home", target: "hero" },
       { label: "About", target: "about" },
       { label: "Practice Areas", target: "practice" },
-      { label: "Testimonials", target: "testimonials" },
       { label: "FAQ", target: "faq" },
       { label: "Contact", target: "contact" }
     ],
@@ -23,7 +22,7 @@ export const siteContent = {
     ],
     about: {
       heading: "About Our Practice",
-      text: `${FIRM.name} is a solo practice founded by attorney Wael Amer, offering dedicated and client-focused legal representation throughout ${FIRM.location.state}. After several years at a major law firm, where he worked on complex and multimillion-dollar matters, Mr. Amer established ${FIRM.name} to provide clients with a more direct, personalized experience.\n\nThe firm focuses on personal injury matters, medical insurance disputes on behalf of healthcare providers, general and complex commercial law matters, and real estate transactions and related issues. Each case is approached with thorough analysis, careful preparation, and attention to the unique goals and concerns of the client.\n\nAt ${FIRM.name}, clients work directly with their attorney from start to finish. The firm prioritizes clear communication, practical guidance, and accessible legal support. Whether navigating an injury claim, resolving insurance disputes, or handling real estate matters, the goal is to ensure clients understand their options and feel confident in their decisions.\n\n${FIRM.name} is committed to professionalism, transparency, and ethical advocacy. All representation is conducted in accordance with the ${FIRM.location.state} Rules of Professional Conduct, with a firm emphasis on integrity, respect, and client trust.`
+      text: `${FIRM.name} is a general practice law firm founded and operated by Wael Amer, Esq., serving clients throughout the northern New Jersey area. The firm provides dedicated and client-focused legal representation across a range of practice areas.\n\nWe are committed to delivering quality legal services through thorough analysis, careful preparation, and a disciplined focus on our clients' unique objectives. Our practice is centered on personal injury matters, medical insurance disputes for healthcare providers, a spectrum of commercial law issues, and real estate transactions.\n\nAccessibility, clear communication, and professional conduct are the cornerstones of our practice. We ensure our clients are consistently informed and that their questions are addressed promptly, striving to exceed expectations at every stage of representation.`
     },
     whySolo: {
       heading: "Why Choose a Solo Practice?",
@@ -39,7 +38,7 @@ export const siteContent = {
       { 
         title: "Medical Insurance Disputes", 
         desc: "Advocating for healthcare providers in medical insurance disputes. Experienced in complex insurance matters and provider representation.",
-        detailed: "Medical insurance disputes involve conflicts between healthcare providers and insurance companies regarding coverage, reimbursement, claim denials, and payment disputes. These matters often require navigating complex insurance policies, understanding medical billing codes, and addressing issues related to claim processing, coverage determinations, and payment delays. Healthcare providers may face challenges when insurance companies deny claims, reduce payments, or delay reimbursements for services rendered. Effective representation in these disputes involves careful review of insurance contracts, medical documentation, and applicable regulations to ensure providers receive proper compensation for the care they provide to patients.",
+        detailed: "Healthcare providers face significant administrative and financial challenges when insurance reimbursement is incorrectly denied, delayed, or reduced. These disputes demand a sophisticated understanding of complex policy provisions, medical coding, and the regulatory frameworks governing payment.\n\nOur practice is dedicated to representing New Jersey medical professionals and facilities in resolving these critical matters. We possess specific expertise in the arbitration and appeal processes that determine fair reimbursement, including disputes arising under the No Surprises Act (NSA) and Out-of-Network (OON) payment disagreements. We guide clients through qualifying payment amount (QPA) challenges, independent dispute resolution (IDR), and related proceedings to enforce your rights. Our representation is built on a meticulous analysis of contracts, patient records, and applicable state and federal law, with the focused goal of securing the complete compensation your practice is entitled to receive.",
         image: "/cards/InsuranceDispute_stock.png"
       },
       { 
@@ -60,34 +59,8 @@ export const siteContent = {
         name: "Wael Amer, ESQ",
         role: "Attorney & Founder",
         title: "Your Direct Legal Counsel",
-        bio: `Wael Amer is the founder and managing attorney of ${FIRM.name}, a solo practice built on the principle that clients deserve direct access to their lawyer and clear, practical guidance throughout their legal matter. Before opening his own firm, Mr. Amer spent several years at a major law firm, where he worked on complex and multimillion-dollar cases involving a broad range of issues.\n\nHis experience includes representing clients in personal injury matters, assisting healthcare providers in medical insurance disputes, handling and leading general and complex commercial law matters and handling various real estate transactions and related legal issues. Throughout his career, Mr. Amer has developed a disciplined, detail-oriented approach to advocacy, grounded in careful preparation and a commitment to client communication.\n\nAs a solo practitioner, Mr. Amer manages every aspect of each case himself. This structure ensures that clients receive consistent attention, straightforward explanations of their options, and legal strategy tailored to their goals and circumstances. He believes that informed clients make better decisions, and he works to provide the clarity needed to navigate the legal process with confidence.\n\nMr. Amer is dedicated to practicing law with professionalism, integrity, and respect. All representation is carried out in accordance with the ${FIRM.location.state} Rules of Professional Conduct, with a strong focus on ethical advocacy and client trust.`,
+        bio: `Wael Amer, Esq. is the founder and principal attorney of ${FIRM.name}. A New Jersey resident since his childhood, he is dedicated to providing strategic legal counsel to clients throughout the northern New Jersey area.\n\nMr. Amer is admitted to practice law in the State of New Jersey and before the United States District Court for the District of New Jersey. He earned his Juris Doctor, cum laude, from Seton Hall University School of Law, where he distinguished himself as a Comments Editor for the Seton Hall Legislative Journal and as a Semifinalist in national and internal moot court competitions. He holds a Bachelor of Science in Finance from The College of New Jersey, where he graduated on the Dean's List.\n\nBefore founding his own practice, Mr. Amer refined his skills as an Associate at Day Pitney, LLP, one of the preeminent law firms in the region. There, he gained valuable experience handling complex litigation and commercial matters, including product liability, employment law, and other commercial disputes. His background also includes roles in financial services, providing him with a unique perspective on the business and financial implications of legal issues.\n\nMr. Amer established ${FIRM.name} to offer clients the high-caliber legal representation of a large firm, combined with the direct attention, personalized strategy, and responsiveness of a dedicated practitioner. He focuses his practice on personal injury, medical insurance disputes for healthcare providers, commercial law, and real estate matters.`,
         email: FIRM.contact.email
-      }
-    ],
-    testimonials: [
-      {
-        name: "Robert Martinez",
-        role: "Business Owner",
-        text: `Wael helped me navigate a complex business contract negotiation. His expertise and attention to detail were exceptional. Working directly with him made all the difference - he was always available to answer my questions. Highly recommend!`,
-        rating: 5
-      },
-      {
-        name: "Jennifer Williams",
-        role: "Divorce Client",
-        text: "During one of the most difficult times in my life, Wael provided compassionate and professional guidance. I appreciated being able to work directly with him rather than being passed to different attorneys. I couldn't have asked for better representation.",
-        rating: 5
-      },
-      {
-        name: "Michael Brown",
-        role: "Real Estate Client",
-        text: "Wael handled my property purchase with professionalism and efficiency. What I loved most was being able to call him directly with questions - no middlemen, no delays. He made the process smooth and stress-free.",
-        rating: 5
-      },
-      {
-        name: "Sarah Johnson",
-        role: "Business Formation Client",
-        text: "Wael helped me set up my LLC and draft all the necessary contracts. His approach was clear, thorough, and personalized to my specific needs. Having direct access to the attorney handling my case was invaluable.",
-        rating: 5
       }
     ],
     faq: [
@@ -105,16 +78,12 @@ export const siteContent = {
       },
       {
         question: "How long does a typical case take?",
-        answer: "Case duration varies significantly based on the type of matter. Simple transactions may take weeks, while complex litigation can take months. During your consultation, I'll provide a realistic timeline estimate based on your specific situation."
+        answer: "Every legal case has its own unique timeline. Straightforward matters may be resolved in weeks, but more complex situations involving litigation, discovery, or arbitration often require a commitment of many months. In some instances, particularly with highly contested or intricate disputes, the process can extend beyond a year. I will review the details of your specific circumstances during our consultation to provide an honest assessment of the expected timeframe."
       },
       {
         question: "What should I bring to my first consultation?",
         answer: "Please bring any relevant documents related to your case, such as contracts, court papers, correspondence, and identification. If you're unsure what to bring, I'll guide you when we schedule your appointment."
       }
-    ],
-    awards: [
-      { title: "Licensed Attorney", organization: "New Jersey State Bar", year: "Active" },
-      { title: "Member", organization: "American Bar Association", year: "Active" }
     ],
     social: FIRM.social,
     contact: FIRM.contact,

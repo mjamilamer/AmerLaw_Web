@@ -44,7 +44,7 @@ describe("Landing page renders", () => {
   it("renders hero content", () => {
     const hero = document.querySelector("#hero");
     expect(hero).toBeTruthy();
-    expect(hero.textContent).toMatch(/Smith & Associates/i);
+    expect(hero.textContent).toMatch(/Amer Law LLC/i);
     expect(hero.textContent).toMatch(/Trusted Legal Representation/i);
   });
 

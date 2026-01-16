@@ -36,7 +36,7 @@ The following information can be kept private via `.env` file:
 Since this is a **public website**, the following information is intentionally visible:
 - Contact phone: `973-356-6222`
 - Contact email: `WAELAMER@AMERLAWLLC.COM`
-- Address: `123 Main Street, Newark, NJ 07102`
+- Address: `1536 State Route 23, #1020, Wayne, NJ 07470`
 
 **This is normal for a business website** - contact information is meant to be public so clients can reach you.
 

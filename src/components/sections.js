@@ -311,7 +311,7 @@ export function renderContact(contactData) {
               type="tel" 
               id="contact-phone"
               name="phone" 
-              placeholder="(555) 123-4567"
+              placeholder="(973) 356-6222"
               required 
               maxlength="20"
               pattern="[0-9\s\(\)\-\+\.]{10,}"
@@ -588,12 +588,12 @@ export function renderFooter(footerData, socialLinks) {
         <div class="footer-grid">
           <div class="footer-section">
             <h3>${escapeHTML(FIRM.name.toUpperCase())}</h3>
-            <p>Trusted legal representation for over 50 years. Protecting your rights and delivering results.</p>
+            <p>Protecting your rights and delivering results.</p>
             <div class="social-links">
               ${socialHTML}
             </div>
           </div>
-          <div class="footer-section">
+          <div class="footer-section footer-section-center">
             <h4>Quick Links</h4>
             <nav aria-label="Footer navigation">
               ${linksHTML}

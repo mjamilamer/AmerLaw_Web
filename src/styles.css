@@ -1997,6 +1997,12 @@
     font-weight: 400;
     letter-spacing: 0.01em;
   }
+  .footer-section-center {
+    text-align: center;
+  }
+  .footer-section-center nav {
+    align-items: center;
+  }
   .footer-section nav {
     display: flex; flex-direction: column; gap: 0.625rem;
   }

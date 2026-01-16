@@ -13,8 +13,6 @@ import {
   renderWhySolo,
   renderPracticeAreas,
   renderTeam,
-  renderTestimonials,
-  renderAwards,
   renderFAQ,
   renderContact,
   renderNewsletter,
@@ -39,8 +37,6 @@ function init() {
     renderPracticeAreas(siteContent.practiceAreas);
     // Team section now integrated into About section for solo practice
     renderTeam(siteContent.team);
-    renderTestimonials(siteContent.testimonials);
-    renderAwards(siteContent.awards);
     renderFAQ(siteContent.faq);
     renderContact(siteContent.contact);
     renderNewsletter();
