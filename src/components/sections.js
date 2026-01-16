@@ -369,9 +369,9 @@ export function renderContact(contactData) {
             </p>
             <span id="documents-error" class="error-message" role="alert" aria-live="polite"></span>
           </div>
-          <div class="form-disclaimer" style="margin: 1.5rem 0; padding: 1rem; background-color: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--accent); border-radius: 4px;">
-            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">
-              <strong style="color: var(--accent-light);">Important Notice:</strong> Submitting this form or uploading documents does not create an attorney-client relationship between you and Amer Law LLC. No legal services are retained by submitting this form. A separate representation agreement must be executed between the parties to establish an attorney-client relationship and retain our services.
+          <div class="form-disclaimer">
+            <p>
+              <strong>Important Notice:</strong> Submitting this form or uploading documents does not create an attorney-client relationship between you and Amer Law LLC. No legal services are retained by submitting this form. A separate representation agreement must be executed between the parties to establish an attorney-client relationship and retain our services.
             </p>
           </div>
           <button type="submit" class="btn">Send Message</button>

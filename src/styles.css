@@ -1390,6 +1390,36 @@
   .error-message {
     color: #e74c3c; font-size: 0.8rem; min-height: 1.1rem;
   }
+  .form-disclaimer {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: #fff3cd;
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .form-disclaimer p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #856404;
+  }
+  .form-disclaimer strong {
+    color: #856404;
+    font-weight: 600;
+  }
+  @media (prefers-color-scheme: dark) {
+    .form-disclaimer {
+      background-color: rgba(255, 193, 7, 0.15);
+      border-left-color: var(--accent-light);
+    }
+    .form-disclaimer p {
+      color: #ffc107;
+    }
+    .form-disclaimer strong {
+      color: #ffc107;
+    }
+  }
   .form-success-message {
     background: #d4edda;
     border: 1px solid #c3e6cb;
